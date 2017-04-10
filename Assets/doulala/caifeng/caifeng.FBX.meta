@@ -1,0 +1,690 @@
+fileFormatVersion: 2
+guid: afd2bf32c9511414ea6cad17efa43c60
+timeCreated: 1481618506
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: CATRigHub002
+    100004: "CATRigL\u624B\u81C21"
+    100006: "CATRigL\u624B\u81C22"
+    100008: "CATRigL\u624B\u81C2Palm"
+    100010: "CATRigL\u624B\u81C2\u624B\u630711"
+    100012: "CATRigL\u624B\u81C2\u624B\u630712"
+    100014: "CATRigL\u624B\u81C2\u624B\u630713"
+    100016: "CATRigL\u624B\u81C2\u624B\u630721"
+    100018: "CATRigL\u624B\u81C2\u624B\u630722"
+    100020: "CATRigL\u624B\u81C2\u624B\u630723"
+    100022: "CATRigL\u624B\u81C2\u624B\u630724"
+    100024: "CATRigL\u624B\u81C2\u624B\u630731"
+    100026: "CATRigL\u624B\u81C2\u624B\u630732"
+    100028: "CATRigL\u624B\u81C2\u624B\u630733"
+    100030: "CATRigL\u624B\u81C2\u624B\u630741"
+    100032: "CATRigL\u624B\u81C2\u624B\u630742"
+    100034: "CATRigL\u624B\u81C2\u624B\u630743"
+    100036: "CATRigL\u624B\u81C2\u624B\u630744"
+    100038: "CATRigL\u624B\u81C2\u624B\u630751"
+    100040: "CATRigL\u624B\u81C2\u624B\u630752"
+    100042: "CATRigL\u624B\u81C2\u624B\u630761"
+    100044: "CATRigL\u624B\u81C2\u624B\u630762"
+    100046: "CATRigL\u624B\u81C2\u624B\u630763"
+    100048: "CATRigL\u624B\u81C2\u624B\u630771"
+    100050: "CATRigL\u624B\u81C2\u624B\u630772"
+    100052: "CATRigL\u624B\u81C2\u624B\u630781"
+    100054: "CATRigL\u624B\u81C2\u624B\u630782"
+    100056: "CATRigL\u624B\u81C2\u624B\u630791"
+    100058: "CATRigR\u624B\u81C21"
+    100060: "CATRigR\u624B\u81C22"
+    100062: "CATRigR\u624B\u81C2Palm"
+    100064: "CATRigR\u624B\u81C2\u624B\u630711"
+    100066: "CATRigR\u624B\u81C2\u624B\u630712"
+    100068: "CATRigR\u624B\u81C2\u624B\u630713"
+    100070: "CATRigR\u624B\u81C2\u624B\u630721"
+    100072: "CATRigR\u624B\u81C2\u624B\u630722"
+    100074: "CATRigR\u624B\u81C2\u624B\u630723"
+    100076: "CATRigR\u624B\u81C2\u624B\u630724"
+    100078: "CATRigR\u624B\u81C2\u624B\u630731"
+    100080: "CATRigR\u624B\u81C2\u624B\u630732"
+    100082: "CATRigR\u624B\u81C2\u624B\u630733"
+    100084: "CATRigR\u624B\u81C2\u624B\u630741"
+    100086: "CATRigR\u624B\u81C2\u624B\u630742"
+    100088: "CATRigR\u624B\u81C2\u624B\u630743"
+    100090: "CATRigR\u624B\u81C2\u624B\u630744"
+    100092: "CATRigR\u624B\u81C2\u624B\u630751"
+    100094: "CATRigR\u624B\u81C2\u624B\u630752"
+    100096: "CATRigR\u624B\u81C2\u624B\u630761"
+    100098: "CATRigR\u624B\u81C2\u624B\u630762"
+    100100: "CATRigR\u624B\u81C2\u624B\u630763"
+    100102: "CATRigR\u624B\u81C2\u624B\u630771"
+    100104: "CATRigR\u624B\u81C2\u624B\u630772"
+    100106: "CATRigR\u624B\u81C2\u624B\u630781"
+    100108: "CATRigR\u624B\u81C2\u624B\u630782"
+    100110: "CATRigR\u624B\u81C2\u624B\u630791"
+    100112: CATRigSpine1
+    100114: CATRigSpine2
+    100116: CATRigTail1
+    100118: CATRigTail1 1
+    100120: CATRigTail1 10
+    100122: CATRigTail1 11
+    100124: CATRigTail1 12
+    100126: CATRigTail1 13
+    100128: CATRigTail1 14
+    100130: CATRigTail1 15
+    100132: CATRigTail1 16
+    100134: CATRigTail1 2
+    100136: CATRigTail1 3
+    100138: CATRigTail1 4
+    100140: CATRigTail1 5
+    100142: CATRigTail1 6
+    100144: CATRigTail1 7
+    100146: CATRigTail1 8
+    100148: CATRigTail1 9
+    100150: CATRigTail2
+    100152: CATRigTail2 1
+    100154: CATRigTail2 10
+    100156: CATRigTail2 11
+    100158: CATRigTail2 12
+    100160: CATRigTail2 13
+    100162: CATRigTail2 14
+    100164: CATRigTail2 15
+    100166: CATRigTail2 16
+    100168: CATRigTail2 2
+    100170: CATRigTail2 3
+    100172: CATRigTail2 4
+    100174: CATRigTail2 5
+    100176: CATRigTail2 6
+    100178: CATRigTail2 7
+    100180: CATRigTail2 8
+    100182: CATRigTail2 9
+    100184: CATRigTail3
+    100186: CATRigTail3 1
+    100188: CATRigTail3 10
+    100190: CATRigTail3 11
+    100192: CATRigTail3 12
+    100194: CATRigTail3 13
+    100196: CATRigTail3 14
+    100198: CATRigTail3 15
+    100200: CATRigTail3 2
+    100202: CATRigTail3 3
+    100204: CATRigTail3 4
+    100206: CATRigTail3 5
+    100208: CATRigTail3 6
+    100210: CATRigTail3 7
+    100212: CATRigTail3 8
+    100214: CATRigTail3 9
+    100216: CATRigTail4
+    100218: CATRigTail4 1
+    100220: CATRigTail4 2
+    100222: CATRigTail4 3
+    100224: CATRigTail4 4
+    100226: CATRigTail4 5
+    100228: CATRigTail4 6
+    100230: CATRigTail4 7
+    100232: CATRigTail5
+    100234: CATRigTail5 1
+    100236: CATRigTail5 2
+    100238: CATRigTail5 3
+    100240: CATRigTail5 4
+    100242: CATRigTail5 5
+    100244: CATRigTail5 6
+    100246: CATRigTail5 7
+    100248: CATRigTail6
+    100250: CATRigTail6 1
+    100252: CATRigTail6 2
+    100254: CATRigTail6 3
+    100256: CATRigTail6 4
+    100258: CATRigTail6 5
+    100260: CATRigTail6 6
+    100262: CATRigTail6 7
+    100264: CATRigTail7
+    100266: CATRigTail7 1
+    100268: CATRigTail7 2
+    100270: CATRigTail7 3
+    100272: "CATRig\u9E1F"
+    100274: obj____
+    400000: //RootNode
+    400002: CATRigHub002
+    400004: "CATRigL\u624B\u81C21"
+    400006: "CATRigL\u624B\u81C22"
+    400008: "CATRigL\u624B\u81C2Palm"
+    400010: "CATRigL\u624B\u81C2\u624B\u630711"
+    400012: "CATRigL\u624B\u81C2\u624B\u630712"
+    400014: "CATRigL\u624B\u81C2\u624B\u630713"
+    400016: "CATRigL\u624B\u81C2\u624B\u630721"
+    400018: "CATRigL\u624B\u81C2\u624B\u630722"
+    400020: "CATRigL\u624B\u81C2\u624B\u630723"
+    400022: "CATRigL\u624B\u81C2\u624B\u630724"
+    400024: "CATRigL\u624B\u81C2\u624B\u630731"
+    400026: "CATRigL\u624B\u81C2\u624B\u630732"
+    400028: "CATRigL\u624B\u81C2\u624B\u630733"
+    400030: "CATRigL\u624B\u81C2\u624B\u630741"
+    400032: "CATRigL\u624B\u81C2\u624B\u630742"
+    400034: "CATRigL\u624B\u81C2\u624B\u630743"
+    400036: "CATRigL\u624B\u81C2\u624B\u630744"
+    400038: "CATRigL\u624B\u81C2\u624B\u630751"
+    400040: "CATRigL\u624B\u81C2\u624B\u630752"
+    400042: "CATRigL\u624B\u81C2\u624B\u630761"
+    400044: "CATRigL\u624B\u81C2\u624B\u630762"
+    400046: "CATRigL\u624B\u81C2\u624B\u630763"
+    400048: "CATRigL\u624B\u81C2\u624B\u630771"
+    400050: "CATRigL\u624B\u81C2\u624B\u630772"
+    400052: "CATRigL\u624B\u81C2\u624B\u630781"
+    400054: "CATRigL\u624B\u81C2\u624B\u630782"
+    400056: "CATRigL\u624B\u81C2\u624B\u630791"
+    400058: "CATRigR\u624B\u81C21"
+    400060: "CATRigR\u624B\u81C22"
+    400062: "CATRigR\u624B\u81C2Palm"
+    400064: "CATRigR\u624B\u81C2\u624B\u630711"
+    400066: "CATRigR\u624B\u81C2\u624B\u630712"
+    400068: "CATRigR\u624B\u81C2\u624B\u630713"
+    400070: "CATRigR\u624B\u81C2\u624B\u630721"
+    400072: "CATRigR\u624B\u81C2\u624B\u630722"
+    400074: "CATRigR\u624B\u81C2\u624B\u630723"
+    400076: "CATRigR\u624B\u81C2\u624B\u630724"
+    400078: "CATRigR\u624B\u81C2\u624B\u630731"
+    400080: "CATRigR\u624B\u81C2\u624B\u630732"
+    400082: "CATRigR\u624B\u81C2\u624B\u630733"
+    400084: "CATRigR\u624B\u81C2\u624B\u630741"
+    400086: "CATRigR\u624B\u81C2\u624B\u630742"
+    400088: "CATRigR\u624B\u81C2\u624B\u630743"
+    400090: "CATRigR\u624B\u81C2\u624B\u630744"
+    400092: "CATRigR\u624B\u81C2\u624B\u630751"
+    400094: "CATRigR\u624B\u81C2\u624B\u630752"
+    400096: "CATRigR\u624B\u81C2\u624B\u630761"
+    400098: "CATRigR\u624B\u81C2\u624B\u630762"
+    400100: "CATRigR\u624B\u81C2\u624B\u630763"
+    400102: "CATRigR\u624B\u81C2\u624B\u630771"
+    400104: "CATRigR\u624B\u81C2\u624B\u630772"
+    400106: "CATRigR\u624B\u81C2\u624B\u630781"
+    400108: "CATRigR\u624B\u81C2\u624B\u630782"
+    400110: "CATRigR\u624B\u81C2\u624B\u630791"
+    400112: CATRigSpine1
+    400114: CATRigSpine2
+    400116: CATRigTail1
+    400118: CATRigTail1 1
+    400120: CATRigTail1 10
+    400122: CATRigTail1 11
+    400124: CATRigTail1 12
+    400126: CATRigTail1 13
+    400128: CATRigTail1 14
+    400130: CATRigTail1 15
+    400132: CATRigTail1 16
+    400134: CATRigTail1 2
+    400136: CATRigTail1 3
+    400138: CATRigTail1 4
+    400140: CATRigTail1 5
+    400142: CATRigTail1 6
+    400144: CATRigTail1 7
+    400146: CATRigTail1 8
+    400148: CATRigTail1 9
+    400150: CATRigTail2
+    400152: CATRigTail2 1
+    400154: CATRigTail2 10
+    400156: CATRigTail2 11
+    400158: CATRigTail2 12
+    400160: CATRigTail2 13
+    400162: CATRigTail2 14
+    400164: CATRigTail2 15
+    400166: CATRigTail2 16
+    400168: CATRigTail2 2
+    400170: CATRigTail2 3
+    400172: CATRigTail2 4
+    400174: CATRigTail2 5
+    400176: CATRigTail2 6
+    400178: CATRigTail2 7
+    400180: CATRigTail2 8
+    400182: CATRigTail2 9
+    400184: CATRigTail3
+    400186: CATRigTail3 1
+    400188: CATRigTail3 10
+    400190: CATRigTail3 11
+    400192: CATRigTail3 12
+    400194: CATRigTail3 13
+    400196: CATRigTail3 14
+    400198: CATRigTail3 15
+    400200: CATRigTail3 2
+    400202: CATRigTail3 3
+    400204: CATRigTail3 4
+    400206: CATRigTail3 5
+    400208: CATRigTail3 6
+    400210: CATRigTail3 7
+    400212: CATRigTail3 8
+    400214: CATRigTail3 9
+    400216: CATRigTail4
+    400218: CATRigTail4 1
+    400220: CATRigTail4 2
+    400222: CATRigTail4 3
+    400224: CATRigTail4 4
+    400226: CATRigTail4 5
+    400228: CATRigTail4 6
+    400230: CATRigTail4 7
+    400232: CATRigTail5
+    400234: CATRigTail5 1
+    400236: CATRigTail5 2
+    400238: CATRigTail5 3
+    400240: CATRigTail5 4
+    400242: CATRigTail5 5
+    400244: CATRigTail5 6
+    400246: CATRigTail5 7
+    400248: CATRigTail6
+    400250: CATRigTail6 1
+    400252: CATRigTail6 2
+    400254: CATRigTail6 3
+    400256: CATRigTail6 4
+    400258: CATRigTail6 5
+    400260: CATRigTail6 6
+    400262: CATRigTail6 7
+    400264: CATRigTail7
+    400266: CATRigTail7 1
+    400268: CATRigTail7 2
+    400270: CATRigTail7 3
+    400272: "CATRig\u9E1F"
+    400274: obj____
+    4300000: obj____
+    7400000: caifeng
+    9500000: //RootNode
+    13700000: obj____
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: caifeng
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 50
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: "CATRig\u9E1F"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigL\u624B\u81C21"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigL\u624B\u81C21/CATRigL\u624B\u81C22"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigL\u624B\u81C21/CATRigL\u624B\u81C22/CATRigL\u624B\u81C2Palm"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigL\u624B\u81C21/CATRigL\u624B\u81C22/CATRigL\u624B\u81C2Palm/CATRigL\u624B\u81C2\u624B\u630711"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigL\u624B\u81C21/CATRigL\u624B\u81C22/CATRigL\u624B\u81C2Palm/CATRigL\u624B\u81C2\u624B\u630711/CATRigL\u624B\u81C2\u624B\u630712"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigL\u624B\u81C21/CATRigL\u624B\u81C22/CATRigL\u624B\u81C2Palm/CATRigL\u624B\u81C2\u624B\u630711/CATRigL\u624B\u81C2\u624B\u630712/CATRigL\u624B\u81C2\u624B\u630713"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigL\u624B\u81C21/CATRigL\u624B\u81C22/CATRigL\u624B\u81C2Palm/CATRigL\u624B\u81C2\u624B\u630721"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigL\u624B\u81C21/CATRigL\u624B\u81C22/CATRigL\u624B\u81C2Palm/CATRigL\u624B\u81C2\u624B\u630721/CATRigL\u624B\u81C2\u624B\u630722"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigL\u624B\u81C21/CATRigL\u624B\u81C22/CATRigL\u624B\u81C2Palm/CATRigL\u624B\u81C2\u624B\u630721/CATRigL\u624B\u81C2\u624B\u630722/CATRigL\u624B\u81C2\u624B\u630723"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigL\u624B\u81C21/CATRigL\u624B\u81C22/CATRigL\u624B\u81C2Palm/CATRigL\u624B\u81C2\u624B\u630721/CATRigL\u624B\u81C2\u624B\u630722/CATRigL\u624B\u81C2\u624B\u630723/CATRigL\u624B\u81C2\u624B\u630724"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigL\u624B\u81C21/CATRigL\u624B\u81C22/CATRigL\u624B\u81C2Palm/CATRigL\u624B\u81C2\u624B\u630731"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigL\u624B\u81C21/CATRigL\u624B\u81C22/CATRigL\u624B\u81C2Palm/CATRigL\u624B\u81C2\u624B\u630731/CATRigL\u624B\u81C2\u624B\u630732"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigL\u624B\u81C21/CATRigL\u624B\u81C22/CATRigL\u624B\u81C2Palm/CATRigL\u624B\u81C2\u624B\u630731/CATRigL\u624B\u81C2\u624B\u630732/CATRigL\u624B\u81C2\u624B\u630733"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigL\u624B\u81C21/CATRigL\u624B\u81C22/CATRigL\u624B\u81C2Palm/CATRigL\u624B\u81C2\u624B\u630741"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigL\u624B\u81C21/CATRigL\u624B\u81C22/CATRigL\u624B\u81C2Palm/CATRigL\u624B\u81C2\u624B\u630741/CATRigL\u624B\u81C2\u624B\u630742"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigL\u624B\u81C21/CATRigL\u624B\u81C22/CATRigL\u624B\u81C2Palm/CATRigL\u624B\u81C2\u624B\u630741/CATRigL\u624B\u81C2\u624B\u630742/CATRigL\u624B\u81C2\u624B\u630743"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigL\u624B\u81C21/CATRigL\u624B\u81C22/CATRigL\u624B\u81C2Palm/CATRigL\u624B\u81C2\u624B\u630741/CATRigL\u624B\u81C2\u624B\u630742/CATRigL\u624B\u81C2\u624B\u630743/CATRigL\u624B\u81C2\u624B\u630744"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigL\u624B\u81C21/CATRigL\u624B\u81C22/CATRigL\u624B\u81C2Palm/CATRigL\u624B\u81C2\u624B\u630751"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigL\u624B\u81C21/CATRigL\u624B\u81C22/CATRigL\u624B\u81C2Palm/CATRigL\u624B\u81C2\u624B\u630751/CATRigL\u624B\u81C2\u624B\u630752"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigL\u624B\u81C21/CATRigL\u624B\u81C22/CATRigL\u624B\u81C2Palm/CATRigL\u624B\u81C2\u624B\u630761"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigL\u624B\u81C21/CATRigL\u624B\u81C22/CATRigL\u624B\u81C2Palm/CATRigL\u624B\u81C2\u624B\u630761/CATRigL\u624B\u81C2\u624B\u630762"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigL\u624B\u81C21/CATRigL\u624B\u81C22/CATRigL\u624B\u81C2Palm/CATRigL\u624B\u81C2\u624B\u630761/CATRigL\u624B\u81C2\u624B\u630762/CATRigL\u624B\u81C2\u624B\u630763"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigL\u624B\u81C21/CATRigL\u624B\u81C22/CATRigL\u624B\u81C2Palm/CATRigL\u624B\u81C2\u624B\u630771"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigL\u624B\u81C21/CATRigL\u624B\u81C22/CATRigL\u624B\u81C2Palm/CATRigL\u624B\u81C2\u624B\u630771/CATRigL\u624B\u81C2\u624B\u630772"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigL\u624B\u81C21/CATRigL\u624B\u81C22/CATRigL\u624B\u81C2Palm/CATRigL\u624B\u81C2\u624B\u630781"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigL\u624B\u81C21/CATRigL\u624B\u81C22/CATRigL\u624B\u81C2Palm/CATRigL\u624B\u81C2\u624B\u630781/CATRigL\u624B\u81C2\u624B\u630782"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigL\u624B\u81C21/CATRigL\u624B\u81C22/CATRigL\u624B\u81C2Palm/CATRigL\u624B\u81C2\u624B\u630791"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigR\u624B\u81C21"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigR\u624B\u81C21/CATRigR\u624B\u81C22"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigR\u624B\u81C21/CATRigR\u624B\u81C22/CATRigR\u624B\u81C2Palm"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigR\u624B\u81C21/CATRigR\u624B\u81C22/CATRigR\u624B\u81C2Palm/CATRigR\u624B\u81C2\u624B\u630711"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigR\u624B\u81C21/CATRigR\u624B\u81C22/CATRigR\u624B\u81C2Palm/CATRigR\u624B\u81C2\u624B\u630711/CATRigR\u624B\u81C2\u624B\u630712"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigR\u624B\u81C21/CATRigR\u624B\u81C22/CATRigR\u624B\u81C2Palm/CATRigR\u624B\u81C2\u624B\u630711/CATRigR\u624B\u81C2\u624B\u630712/CATRigR\u624B\u81C2\u624B\u630713"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigR\u624B\u81C21/CATRigR\u624B\u81C22/CATRigR\u624B\u81C2Palm/CATRigR\u624B\u81C2\u624B\u630721"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigR\u624B\u81C21/CATRigR\u624B\u81C22/CATRigR\u624B\u81C2Palm/CATRigR\u624B\u81C2\u624B\u630721/CATRigR\u624B\u81C2\u624B\u630722"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigR\u624B\u81C21/CATRigR\u624B\u81C22/CATRigR\u624B\u81C2Palm/CATRigR\u624B\u81C2\u624B\u630721/CATRigR\u624B\u81C2\u624B\u630722/CATRigR\u624B\u81C2\u624B\u630723"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigR\u624B\u81C21/CATRigR\u624B\u81C22/CATRigR\u624B\u81C2Palm/CATRigR\u624B\u81C2\u624B\u630721/CATRigR\u624B\u81C2\u624B\u630722/CATRigR\u624B\u81C2\u624B\u630723/CATRigR\u624B\u81C2\u624B\u630724"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigR\u624B\u81C21/CATRigR\u624B\u81C22/CATRigR\u624B\u81C2Palm/CATRigR\u624B\u81C2\u624B\u630731"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigR\u624B\u81C21/CATRigR\u624B\u81C22/CATRigR\u624B\u81C2Palm/CATRigR\u624B\u81C2\u624B\u630731/CATRigR\u624B\u81C2\u624B\u630732"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigR\u624B\u81C21/CATRigR\u624B\u81C22/CATRigR\u624B\u81C2Palm/CATRigR\u624B\u81C2\u624B\u630731/CATRigR\u624B\u81C2\u624B\u630732/CATRigR\u624B\u81C2\u624B\u630733"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigR\u624B\u81C21/CATRigR\u624B\u81C22/CATRigR\u624B\u81C2Palm/CATRigR\u624B\u81C2\u624B\u630741"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigR\u624B\u81C21/CATRigR\u624B\u81C22/CATRigR\u624B\u81C2Palm/CATRigR\u624B\u81C2\u624B\u630741/CATRigR\u624B\u81C2\u624B\u630742"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigR\u624B\u81C21/CATRigR\u624B\u81C22/CATRigR\u624B\u81C2Palm/CATRigR\u624B\u81C2\u624B\u630741/CATRigR\u624B\u81C2\u624B\u630742/CATRigR\u624B\u81C2\u624B\u630743"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigR\u624B\u81C21/CATRigR\u624B\u81C22/CATRigR\u624B\u81C2Palm/CATRigR\u624B\u81C2\u624B\u630741/CATRigR\u624B\u81C2\u624B\u630742/CATRigR\u624B\u81C2\u624B\u630743/CATRigR\u624B\u81C2\u624B\u630744"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigR\u624B\u81C21/CATRigR\u624B\u81C22/CATRigR\u624B\u81C2Palm/CATRigR\u624B\u81C2\u624B\u630751"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigR\u624B\u81C21/CATRigR\u624B\u81C22/CATRigR\u624B\u81C2Palm/CATRigR\u624B\u81C2\u624B\u630751/CATRigR\u624B\u81C2\u624B\u630752"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigR\u624B\u81C21/CATRigR\u624B\u81C22/CATRigR\u624B\u81C2Palm/CATRigR\u624B\u81C2\u624B\u630761"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigR\u624B\u81C21/CATRigR\u624B\u81C22/CATRigR\u624B\u81C2Palm/CATRigR\u624B\u81C2\u624B\u630761/CATRigR\u624B\u81C2\u624B\u630762"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigR\u624B\u81C21/CATRigR\u624B\u81C22/CATRigR\u624B\u81C2Palm/CATRigR\u624B\u81C2\u624B\u630761/CATRigR\u624B\u81C2\u624B\u630762/CATRigR\u624B\u81C2\u624B\u630763"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigR\u624B\u81C21/CATRigR\u624B\u81C22/CATRigR\u624B\u81C2Palm/CATRigR\u624B\u81C2\u624B\u630771"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigR\u624B\u81C21/CATRigR\u624B\u81C22/CATRigR\u624B\u81C2Palm/CATRigR\u624B\u81C2\u624B\u630771/CATRigR\u624B\u81C2\u624B\u630772"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigR\u624B\u81C21/CATRigR\u624B\u81C22/CATRigR\u624B\u81C2Palm/CATRigR\u624B\u81C2\u624B\u630781"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigR\u624B\u81C21/CATRigR\u624B\u81C22/CATRigR\u624B\u81C2Palm/CATRigR\u624B\u81C2\u624B\u630781/CATRigR\u624B\u81C2\u624B\u630782"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigR\u624B\u81C21/CATRigR\u624B\u81C22/CATRigR\u624B\u81C2Palm/CATRigR\u624B\u81C2\u624B\u630791"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigSpine1"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigSpine1/CATRigSpine2"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigSpine1/CATRigSpine2/CATRigHub002"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigSpine1/CATRigSpine2/CATRigHub002/CATRigTail1 11"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigSpine1/CATRigSpine2/CATRigHub002/CATRigTail1 11/CATRigTail2
+          16"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigSpine1/CATRigSpine2/CATRigHub002/CATRigTail1 11/CATRigTail2
+          16/CATRigTail3 11"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigSpine1/CATRigSpine2/CATRigHub002/CATRigTail1 11/CATRigTail2
+          16/CATRigTail3 11/CATRigTail4 4"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigSpine1/CATRigSpine2/CATRigHub002/CATRigTail1 11/CATRigTail2
+          16/CATRigTail3 11/CATRigTail4 4/CATRigTail5 5"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigSpine1/CATRigSpine2/CATRigHub002/CATRigTail1 11/CATRigTail2
+          16/CATRigTail3 11/CATRigTail4 4/CATRigTail5 5/CATRigTail6 4"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigSpine1/CATRigSpine2/CATRigHub002/CATRigTail1 12"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigSpine1/CATRigSpine2/CATRigHub002/CATRigTail1 12/CATRigTail2
+          14"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigSpine1/CATRigSpine2/CATRigHub002/CATRigTail1 12/CATRigTail2
+          14/CATRigTail3 10"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigSpine1/CATRigSpine2/CATRigHub002/CATRigTail1 12/CATRigTail2
+          14/CATRigTail3 10/CATRigTail4 5"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigSpine1/CATRigSpine2/CATRigHub002/CATRigTail1 12/CATRigTail2
+          14/CATRigTail3 10/CATRigTail4 5/CATRigTail5 4"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigSpine1/CATRigSpine2/CATRigHub002/CATRigTail1 12/CATRigTail2
+          14/CATRigTail3 10/CATRigTail4 5/CATRigTail5 4/CATRigTail6 7"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigSpine1/CATRigSpine2/CATRigHub002/CATRigTail1 13"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigSpine1/CATRigSpine2/CATRigHub002/CATRigTail1 13/CATRigTail2
+          15"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigSpine1/CATRigSpine2/CATRigHub002/CATRigTail1 13/CATRigTail2
+          15/CATRigTail3 15"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigSpine1/CATRigSpine2/CATRigHub002/CATRigTail1 14"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigSpine1/CATRigSpine2/CATRigHub002/CATRigTail1 14/CATRigTail2
+          11"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigSpine1/CATRigSpine2/CATRigHub002/CATRigTail1 14/CATRigTail2
+          11/CATRigTail3 14"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigSpine1/CATRigSpine2/CATRigHub002/CATRigTail1 15"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigSpine1/CATRigSpine2/CATRigHub002/CATRigTail1 15/CATRigTail2
+          12"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigSpine1/CATRigSpine2/CATRigHub002/CATRigTail1 15/CATRigTail2
+          12/CATRigTail3 12"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigSpine1/CATRigSpine2/CATRigHub002/CATRigTail1 15/CATRigTail2
+          12/CATRigTail3 12/CATRigTail4 6"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigSpine1/CATRigSpine2/CATRigHub002/CATRigTail1 15/CATRigTail2
+          12/CATRigTail3 12/CATRigTail4 6/CATRigTail5 6"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigSpine1/CATRigSpine2/CATRigHub002/CATRigTail1 15/CATRigTail2
+          12/CATRigTail3 12/CATRigTail4 6/CATRigTail5 6/CATRigTail6 6"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigSpine1/CATRigSpine2/CATRigHub002/CATRigTail1 16"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigSpine1/CATRigSpine2/CATRigHub002/CATRigTail1 16/CATRigTail2
+          13"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigSpine1/CATRigSpine2/CATRigHub002/CATRigTail1 16/CATRigTail2
+          13/CATRigTail3 13"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigSpine1/CATRigSpine2/CATRigHub002/CATRigTail1 16/CATRigTail2
+          13/CATRigTail3 13/CATRigTail4 7"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigSpine1/CATRigSpine2/CATRigHub002/CATRigTail1 16/CATRigTail2
+          13/CATRigTail3 13/CATRigTail4 7/CATRigTail5 7"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigSpine1/CATRigSpine2/CATRigHub002/CATRigTail1 16/CATRigTail2
+          13/CATRigTail3 13/CATRigTail4 7/CATRigTail5 7/CATRigTail6 5"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1/CATRigTail2 8"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1/CATRigTail2 8/CATRigTail3 7"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1/CATRigTail2 8/CATRigTail3 7/CATRigTail4 2"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1/CATRigTail2 8/CATRigTail3 7/CATRigTail4 2/CATRigTail5
+          2"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1/CATRigTail2 8/CATRigTail3 7/CATRigTail4 2/CATRigTail5
+          2/CATRigTail6 2"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1/CATRigTail2 8/CATRigTail3 7/CATRigTail4 2/CATRigTail5
+          2/CATRigTail6 2/CATRigTail7 2"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 1"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 1/CATRigTail2 7"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 1/CATRigTail2 7/CATRigTail3 5"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 1/CATRigTail2 7/CATRigTail3 5/CATRigTail4
+          1"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 1/CATRigTail2 7/CATRigTail3 5/CATRigTail4
+          1/CATRigTail5 1"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 1/CATRigTail2 7/CATRigTail3 5/CATRigTail4
+          1/CATRigTail5 1/CATRigTail6 1"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 1/CATRigTail2 7/CATRigTail3 5/CATRigTail4
+          1/CATRigTail5 1/CATRigTail6 1/CATRigTail7 1"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 2"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 2/CATRigTail2 6"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 2/CATRigTail2 6/CATRigTail3 3"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 2/CATRigTail2 6/CATRigTail3 3/CATRigTail4"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 2/CATRigTail2 6/CATRigTail3 3/CATRigTail4/CATRigTail5"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 2/CATRigTail2 6/CATRigTail3 3/CATRigTail4/CATRigTail5/CATRigTail6"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 2/CATRigTail2 6/CATRigTail3 3/CATRigTail4/CATRigTail5/CATRigTail6/CATRigTail7"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 3"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 3/CATRigTail2 5"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 3/CATRigTail2 5/CATRigTail3 2"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 4"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 4/CATRigTail2 4"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 4/CATRigTail2 4/CATRigTail3"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 5"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 5/CATRigTail2 3"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 5/CATRigTail2 3/CATRigTail3 6"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 6"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 6/CATRigTail2 9"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 7"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 7/CATRigTail2 2"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 7/CATRigTail2 2/CATRigTail3 1"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 8"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 8/CATRigTail2"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 8/CATRigTail2/CATRigTail3 4"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 9"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 9/CATRigTail2 1"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 9/CATRigTail2 1/CATRigTail3 8"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 10"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 10/CATRigTail2 10"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 10/CATRigTail2 10/CATRigTail3 9"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 10/CATRigTail2 10/CATRigTail3 9/CATRigTail4
+          3"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 10/CATRigTail2 10/CATRigTail3 9/CATRigTail4
+          3/CATRigTail5 3"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 10/CATRigTail2 10/CATRigTail3 9/CATRigTail4
+          3/CATRigTail5 3/CATRigTail6 3"
+        weight: 1
+      - path: "CATRig\u9E1F/CATRigTail1 10/CATRigTail2 10/CATRigTail3 9/CATRigTail4
+          3/CATRigTail5 3/CATRigTail6 3/CATRigTail7 3"
+        weight: 1
+      - path: obj____
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

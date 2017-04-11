@@ -94,23 +94,20 @@ public class NativeBridge : MonoBehaviour
               StartCoroutine(DownLoad(LOCAL_VERSION_URL + VERSION_FILE, delegate (WWW localVersion)
                 {
                     HandleVersionFile(localVersion.text, localVertsionDic);
-                
 
-#if UNITY_ANDROID                 &&!UNITY_EDITO
+
+#if UNITY_ANDROID && !UNITY_EDITO
                     //javaObject.Call("unityInitialized"); 
 #endif
 
-#if UNITY_IPHONE                  &&!UNITY_EDITOR
+#if UNITY_IPHONE && !UNITY_EDITOR
                     IOSNativeInitCenter(this.gameObject.name, "InitializePet");
 #endif
-                    
-                    json_Message obj = new json_Message();
-                    obj.MessageType = 1;
-                    obj.Message =(UnityEngine.Random.Range(1,29)).ToString()+"|小狮王|草原|100";
-                    //obj.Message = 100.ToString();
-                    string js=JsonUtility.ToJson(obj);
-                    InitializePet(js);
-                    
+                    currentPet = Instantiate(Resources.Load<GameObject>("Pets/" + RandomUtil.Array(new int[3] { 2, 6, 14 })));
+                    currentPet.transform.SetParent(transform.GetChild(0).GetChild(0));
+                    currentPet.transform.localPosition = Vector3.zero;
+                    currentPet.transform.localRotation = Quaternion.identity;
+
                 }));
           }));        
     }

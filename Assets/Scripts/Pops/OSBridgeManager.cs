@@ -154,8 +154,15 @@ public class OSBridgeManager : MonoSingleton<OSBridgeManager>
 
     public void JudgeCapturePetOnServer(string petName)
     {
-        string url = _caughtPetURL + _roomID + "&petName=" + petName + "&token=" + _userToken;
-        StartCoroutine(Get(url, JudgeCapturePetHandler));
+        if (!string.IsNullOrEmpty(petName))
+        {
+            string url = _caughtPetURL + _roomID + "&petName=" + petName + "&token=" + _userToken;
+            StartCoroutine(Get(url, JudgeCapturePetHandler));
+        }
+        else
+        {
+            EventDispatcher.TriggerEvent("RefreshRoomStatus");
+        }
     }
 
     private void JudgeCapturePetHandler(string json)

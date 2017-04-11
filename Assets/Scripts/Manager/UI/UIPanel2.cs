@@ -9,6 +9,10 @@ public class UIPanel2 : MonoBehaviour
 {
     //Delegate for Timer to Call per second
     public delegate void AfterOneSecondHandler(int lastSeconds);
+
+    //Private
+    private string _currentPetName;
+    private bool _isCaughtPet;
    
     //LoadingPage
     private Transform _loadingPage;
@@ -116,6 +120,8 @@ public class UIPanel2 : MonoBehaviour
     /// </summary>
     public void  InitCapture()
     {
+        _currentPetName = null;
+        _isCaughtPet = false;
         HideLoadingPage();
         InitHint();
     }
@@ -179,7 +185,7 @@ public class UIPanel2 : MonoBehaviour
         
         EventDispatcher.AddEvent("OnAimed", OnAimedHandler);
         EventDispatcher.AddEvent("OnNotAimed", OnNotAimedHandler);
-        EventDispatcher.AddEvent("OnCapture", OnCaptureHandler);
+        EventDispatcher.AddEvent<string>("OnCapture", OnCaptureHandler);
     }
 
     //The handler for timer to countdown 10 minutes and will finish the game after 10min
@@ -188,7 +194,7 @@ public class UIPanel2 : MonoBehaviour
         if (lastSeconds == 0)
         {
             EndCapture();
-            //
+            OSBridgeManager.Instance.OnUnityBack(_isCaughtPet?1:0);
         }
         int hour = lastSeconds / 3600;
         int minute = (lastSeconds % 3600) / 60;
@@ -218,9 +224,9 @@ public class UIPanel2 : MonoBehaviour
         }
     }
 
-
-    private void OnCaptureHandler()
+    private void OnCaptureHandler(string petName)
     {
+        _currentPetName = petName;
         StartCoroutine(Timer(3, GoOnCaptureHandler));
     }
 
@@ -235,6 +241,7 @@ public class UIPanel2 : MonoBehaviour
             {
                 Time.timeScale = 1;
             }
+            _currentPetName = null;
         }
         else
         {
@@ -299,7 +306,8 @@ public class UIPanel2 : MonoBehaviour
     //Function be call when captureButton has been pressed
     private void CaptureButtonOnClickHandler(GameObject linster, object _arg, object[] _params)
     {
-        OSBridgeManager.Instance.JudgeCapturePetOnServer("金宠");//todo
+        OSBridgeManager.Instance.JudgeCapturePetOnServer(_currentPetName);
+        Debug.Log(_currentPetName);
     }
 
     private void EndCapture()
@@ -310,7 +318,7 @@ public class UIPanel2 : MonoBehaviour
         UIEventListener.RemoveUIListener(_backButton.gameObject);
         EventDispatcher.RemoveEvent("OnAimed", OnAimedHandler);
         EventDispatcher.RemoveEvent("OnNotAimed", OnNotAimedHandler);
-        EventDispatcher.RemoveEvent("OnCapture", OnCaptureHandler);
+        EventDispatcher.RemoveEvent<string>("OnCapture", OnCaptureHandler);
         _capturePage.gameObject.SetActive(false);
     }
     #endregion
@@ -320,6 +328,12 @@ public class UIPanel2 : MonoBehaviour
     private void ShowRoomStatusHandler()
     {
         EndCapture();
+        _isCaughtPet = true;
+        if(_currentPetName==null)
+        {
+            Debug.LogError("Big Error!");
+        }
+        _roomStatusPetIcon.sprite = Resources.Load<Sprite>("Sprites/PetIcon/" + _currentPetName);
         _capturePage.gameObject.SetActive(false);
         _hintPage.gameObject.SetActive(false);
         _historyInfoPage.gameObject.SetActive(false);
@@ -344,6 +358,7 @@ public class UIPanel2 : MonoBehaviour
 
     private void RefreshRoomStatusHandler()
     {
+        Debug.Log(11);
         string cont = OSBridgeManager.Instance.GetRoomStatusPlayerNum();
         if(cont!=null)
         {
@@ -407,7 +422,7 @@ public class UIPanel2 : MonoBehaviour
         UIEventListener.RemoveUIListener(_historyInfoCloseButton.gameObject);
         UIEventListener.RemoveUIListener(_historyInfoYesButton.gameObject);
         _historyInfoPage.gameObject.SetActive(false);
-        //to do
+        OSBridgeManager.Instance.OnUnityBack(_isCaughtPet ? 1 : 0);
     }
 
     #endregion

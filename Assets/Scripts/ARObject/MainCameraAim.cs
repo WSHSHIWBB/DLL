@@ -47,7 +47,8 @@ public class MainCameraAim : MonoBehaviour
                     lastTime += Time.deltaTime;
                     if (lastTime >= captureTime)
                     {
-                        EventDispatcher.TriggerEvent("OnCapture");
+                        string name = hit.collider.attachedRigidbody.name.Replace("(Clone)", "");
+                        EventDispatcher.TriggerEvent("OnCapture", name);
                         lastTime = 0;
                     }
                 }

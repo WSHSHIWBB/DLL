@@ -47,34 +47,35 @@ public class CameraQuard: MonoBehaviour
             //to do can't get the authorization of webcam
         }
     }
-
-    /*
-    private void OnGUI()
-    {
-        GUILayout.Label("mirroied?" + webCam.videoVerticallyMirrored);
-        GUILayout.Label("Angle" + webCam.videoRotationAngle);
-        GUILayout.Label("oRIATION" + Screen.orientation);
-        if (GUILayout.Button("liling(0,1,1,-1)", GUILayout.Height(200)))
-        {
-            material.mainTextureOffset = new Vector2(0,1);
-            material.mainTextureScale = new Vector2(1, -1);
-        }
-        if (GUILayout.Button("liling(1,0,-1,1)", GUILayout.Height(200)))
-        {
-            material.mainTextureOffset = new Vector2(1, 0);
-            material.mainTextureScale = new Vector2(-1, 1);
-        }
-        if (GUILayout.Button("liling(1,0,1,-1)", GUILayout.Height(200)))
-        {
-            material.mainTextureOffset = new Vector2(1, 0);
-            material.mainTextureScale = new Vector2(1,-1);
-        }
-        if (GUILayout.Button("liling(0,1,-1,1)", GUILayout.Height(200)))
-        {
-            material.mainTextureOffset = new Vector2(0, 1);
-            material.mainTextureScale = new Vector2(-1, 1);
-        }
-    }
-    */
-
 }
+
+
+/*
+private void OnGUI()
+{
+    GUILayout.Label("mirroied?" + webCam.videoVerticallyMirrored);
+    GUILayout.Label("Angle" + webCam.videoRotationAngle);
+    GUILayout.Label("oRIATION" + Screen.orientation);
+    if (GUILayout.Button("liling(0,1,1,-1)", GUILayout.Height(200)))
+    {
+        material.mainTextureOffset = new Vector2(0,1);
+        material.mainTextureScale = new Vector2(1, -1);
+    }
+    if (GUILayout.Button("liling(1,0,-1,1)", GUILayout.Height(200)))
+    {
+        material.mainTextureOffset = new Vector2(1, 0);
+        material.mainTextureScale = new Vector2(-1, 1);
+    }
+    if (GUILayout.Button("liling(1,0,1,-1)", GUILayout.Height(200)))
+    {
+        material.mainTextureOffset = new Vector2(1, 0);
+        material.mainTextureScale = new Vector2(1,-1);
+    }
+    if (GUILayout.Button("liling(0,1,-1,1)", GUILayout.Height(200)))
+    {
+        material.mainTextureOffset = new Vector2(0, 1);
+        material.mainTextureScale = new Vector2(-1, 1);
+    }
+}
+*/
+

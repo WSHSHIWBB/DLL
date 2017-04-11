@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour
 {
     private void Awake()
     {
+        DontDestroyOnLoad(this);
         ModuleManager.Instance.RegisterAllModules();
     }
 

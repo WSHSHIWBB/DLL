@@ -9,11 +9,7 @@ public class UIPanel2 : MonoBehaviour
 {
     //Delegate for Timer to Call per second
     public delegate void AfterOneSecondHandler(int lastSeconds);
-    //Delegate for afer WWW class Get Successfully
-    public delegate void AfterWWWGetHandler(string json);
-    //Delegate for afer WWW class Post Successfully
-    public delegate void AfterWWWPostHandler(string json);
-
+   
     //LoadingPage
     private Transform _loadingPage;
 
@@ -29,7 +25,6 @@ public class UIPanel2 : MonoBehaviour
     private Transform _backCheck;
     private Button _yesButton;
     private Button _noButton;
-    private Transform _countDown;
     private Text _timer;
     private Image _aimImage;
 
@@ -61,34 +56,6 @@ public class UIPanel2 : MonoBehaviour
         }
     }
 
-    private IEnumerator Get(string url, AfterWWWGetHandler handler)
-    {
-        WWW www = new WWW(url);
-        yield return www;
-        if (!string.IsNullOrEmpty(www.error))
-        {
-            print("WWW error " + www.error);
-        }
-        else
-        {
-            handler(www.text);
-        }
-    }
-
-    private IEnumerator Post(string url,WWWForm form,AfterWWWPostHandler handler)
-    {
-        WWW www = new WWW(url, form);
-        yield return www;
-        if (!string.IsNullOrEmpty(www.error))
-        {
-            print("WWW error " + www.error);
-        }
-        else
-        {
-            handler(www.text);
-        }
-    }
-
     private void Awake()
     {
         _loadingPage = transform.Find("LoadingPage");
@@ -105,7 +72,6 @@ public class UIPanel2 : MonoBehaviour
         _backCheck = transform.Find("CapturePage/BackCheck");
         _yesButton = transform.GetComponentByPath<Button>("CapturePage/BackCheck/YesButton");
         _noButton = transform.GetComponentByPath<Button>("CapturePage/BackCheck/NoButton");
-        _countDown = transform.Find("CapturePage/CountDown");
         _timer = transform.GetComponentByPath<Text>("CapturePage/CountDown/Timer");
         _aimImage = transform.GetComponentByPath<Image>("CapturePage/AimImage/AimImage_1");
 
@@ -120,6 +86,21 @@ public class UIPanel2 : MonoBehaviour
         _historyInfoCloseButton = transform.GetComponentByPath<Button>("HistoryInfoPage/BackGround/CloseButton");
         _historyInfoYesButton = transform.GetComponentByPath<Button>("HistoryInfoPage/BackGround/YesButton");
         _layoutGroupTran = transform.Find("HistoryInfoPage/BackGround/PlayerInfoBG/Mask/ScrollRect");
+    }
+
+    private void OnEnable()
+    {
+        EventDispatcher.AddEvent("ShowHistory", ShowHistoryInfoHandler);
+        EventDispatcher.AddEvent("ShowRoomStatus", ShowRoomStatusHandler);
+        EventDispatcher.AddEvent("RefreshRoomStatus", RefreshRoomStatusHandler);
+    }
+
+    private void OnDisable()
+    {
+        EventDispatcher.RemoveEvent("ShowHistory", ShowHistoryInfoHandler);
+        EventDispatcher.RemoveEvent("ShowRoomStatus", ShowRoomStatusHandler);
+        EventDispatcher.RemoveEvent("RefreshRoomStatus", RefreshRoomStatusHandler);
+
     }
 
     private void Start()
@@ -194,7 +175,8 @@ public class UIPanel2 : MonoBehaviour
         _capturePage.gameObject.SetActive(true);
         _capturePage.DOScale(1, 0.3f).SetUpdate(true);
         UIEventListener.AddUIListener(_backButton.gameObject).SetEventHandler(EnumUIinputType.OnClick, new UIEventHandler(BackButtonOnClickHandler));
-
+        // to do Show pet
+        
         EventDispatcher.AddEvent("OnAimed", OnAimedHandler);
         EventDispatcher.AddEvent("OnNotAimed", OnNotAimedHandler);
         EventDispatcher.AddEvent("OnCapture", OnCaptureHandler);
@@ -206,8 +188,7 @@ public class UIPanel2 : MonoBehaviour
         if (lastSeconds == 0)
         {
             EndCapture();
-
-            //to do
+            //
         }
         int hour = lastSeconds / 3600;
         int minute = (lastSeconds % 3600) / 60;
@@ -298,7 +279,6 @@ public class UIPanel2 : MonoBehaviour
         HideBackCheck();
     }
 
-
     //Hide BackCheck and GoOn Game after NoButton is Been pressed
     private void HideBackCheck()
     {
@@ -312,15 +292,14 @@ public class UIPanel2 : MonoBehaviour
     private void YesButtonOnClickHandler(GameObject linster, object _arg, object[] _params)
     {
         EndCapture();
-        //to be end capture and failed
+        OSBridgeManager.Instance.OnUnityBack(0);
     }
 
 
     //Function be call when captureButton has been pressed
     private void CaptureButtonOnClickHandler(GameObject linster, object _arg, object[] _params)
     {
-        EndCapture();
-        StartRoomStatus();
+        OSBridgeManager.Instance.JudgeCapturePetOnServer("金宠");//todo
     }
 
     private void EndCapture()
@@ -338,19 +317,98 @@ public class UIPanel2 : MonoBehaviour
 
     #region RoomStatusLogic
 
-    private void StartRoomStatus()
+    private void ShowRoomStatusHandler()
     {
+        EndCapture();
         _capturePage.gameObject.SetActive(false);
         _hintPage.gameObject.SetActive(false);
         _historyInfoPage.gameObject.SetActive(false);
         _roomStatusPage.localScale = Vector3.zero;
         _roomStatusPage.gameObject.SetActive(true);
         _roomStatusPage.DOScale(1, 0.3f).SetUpdate(true);
+
+        UIEventListener.AddUIListener(_roomStatusCloseButton.gameObject).SetEventHandler(EnumUIinputType.OnClick, RoomStatusCloseButtonOnClickhandler);
+    }
+
+    private void EndRoomStatus()
+    {
+        _roomStatusPage.gameObject.SetActive(false);
+        UIEventListener.RemoveUIListener(_roomStatusCloseButton.gameObject);
+    }
+
+    private void RoomStatusCloseButtonOnClickhandler(GameObject linster, object _arg, object[] _params)
+    {
+        EndRoomStatus();
+        OSBridgeManager.Instance.OnUnityBack(1);
+    }
+
+    private void RefreshRoomStatusHandler()
+    {
+        string cont = OSBridgeManager.Instance.GetRoomStatusPlayerNum();
+        if(cont!=null)
+        {
+            _roomStatusNumText.text = cont;
+        }
     }
 
     #endregion
 
     #region HistoryInfoLogic
+
+    private void ShowHistoryInfoHandler()
+    {
+        EndCapture();
+        EndRoomStatus();
+        string[] userNames = OSBridgeManager.Instance.GetUserNames();
+        if(userNames==null)
+        {
+            Debug.LogError("The userNames is null!");
+            return;
+        }
+
+        if(_layoutGroupTran.childCount!=0)
+        {
+            for(int i=0;i<_layoutGroupTran.childCount;++i)
+            {
+                _layoutGroupTran.GetChild(i).gameObject.SetActive(false);
+            }
+        }
+
+        for(int i=0;i<userNames.Length;++i)
+        {
+            if (i< _layoutGroupTran.childCount)
+            {
+                _layoutGroupTran.GetChild(i).GetComponentByPath<Text>("BG/NameText").text = userNames[i];
+                _layoutGroupTran.GetChild(i).GetComponentByPath<Image>("BG/PlayerIcon").sprite = OSBridgeManager.Instance.GetSpriteByName(userNames[i]);
+                _layoutGroupTran.GetChild(i).gameObject.SetActive(true);
+            }
+            else
+            {
+                GameObject prefab = Instantiate(Resources.Load<GameObject>("Sprites/Prefabs/UserInfoItem"), _layoutGroupTran, false);
+                prefab.GetComponentByPath<Text>("BG/NameText").text = userNames[i];
+                prefab.GetComponentByPath<Image>("BG/PlayerIcon").sprite = OSBridgeManager.Instance.GetSpriteByName(userNames[i]); 
+            }
+        }
+
+        _capturePage.gameObject.SetActive(false);
+        _hintPage.gameObject.SetActive(false);
+        _roomStatusPage.gameObject.SetActive(false);
+        _historyInfoPage.gameObject.SetActive(false);
+        _historyInfoPage.localScale = Vector3.zero;
+        _historyInfoPage.gameObject.SetActive(true);
+        _historyInfoPage.DOScale(1, 0.3f).SetUpdate(true);
+
+        UIEventListener.AddUIListener(_historyInfoCloseButton.gameObject).SetEventHandler(EnumUIinputType.OnClick, OnHistoryInfoCloseClickHandler);
+        UIEventListener.AddUIListener(_historyInfoYesButton.gameObject).SetEventHandler(EnumUIinputType.OnClick, OnHistoryInfoCloseClickHandler);
+    }
+
+    private void OnHistoryInfoCloseClickHandler(GameObject linster, object _arg, object[] _params)
+    {
+        UIEventListener.RemoveUIListener(_historyInfoCloseButton.gameObject);
+        UIEventListener.RemoveUIListener(_historyInfoYesButton.gameObject);
+        _historyInfoPage.gameObject.SetActive(false);
+        //to do
+    }
 
     #endregion
 }

@@ -96,7 +96,7 @@ public class NativeBridge : MonoBehaviour
                     HandleVersionFile(localVersion.text, localVertsionDic);
                 
 
-#if UNITY_ANDROID                 &&!UNITY_EDITOR
+#if UNITY_ANDROID                 &&!UNITY_EDITO
                     //javaObject.Call("unityInitialized"); 
 #endif
 

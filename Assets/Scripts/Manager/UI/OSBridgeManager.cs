@@ -74,27 +74,39 @@ public class OSBridgeManager : MonoSingleton<OSBridgeManager>
     private void Awake()
     {
         _name_Sprite_Dic = new Dictionary<string, Sprite>();
-#if UNITY_ANDROID
-        /*
+#if UNITY_ANDROID && !UNITY_EDITOR
         AndroidJavaClass javaClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
         javaObject = javaClass.GetStatic<AndroidJavaObject>("currentActivity");
-        */
 #endif
-        //Invoke("Test", 1);
+
+#if UNITY_EDITOR
+        Test();
+#endif
     }
 
     private void Test()
     {
-        StartCoroutine(Get(_roomStatusURL + 9, GetRoomStatusHandler));
+        //StartCoroutine(Get(_roomStatusURL + 9, GetRoomStatusHandler));
+        roomInfo info = new roomInfo();
+        info.roomID = 195;
+        info.userToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQ4LCJpYXQiOjE0OTE5NTkxNDgsImV4cCI6MTQ5MjEzMTk0OH0.8T9sKTGRXFXdwRNs2Cz9ZoCPX7_2tI5jQH0K8-a8Ovs";
+        string json = JsonMapper.ToJson(info);
+        InitRoom(json);
     }
 
     public void InitRoom(string json)
     {
         StopAllCoroutines();
         roomInfo info = JsonMapper.ToObject<roomInfo>(json);
+        if(info==null)
+        {
+            Debug.LogError("Json Error!");
+            return;
+        }
         _roomID = info.roomID;
         _userToken = info.userToken;
         StartCoroutine(Get(_roomStatusURL + _roomID, GetRoomStatusHandler));
+        EventDispatcher.TriggerEvent("InitCapture");
     }
 
     #region PublicFunc
@@ -154,30 +166,34 @@ public class OSBridgeManager : MonoSingleton<OSBridgeManager>
 
     public void JudgeCapturePetOnServer(string petName)
     {
+        Debug.Log(petName);
         if (!string.IsNullOrEmpty(petName))
         {
-            string url = _caughtPetURL + _roomID + "&petName=" + petName + "&token=" + _userToken;
+            string url = _caughtPetURL + _roomID + "&petName=" + WWW.EscapeURL(petName) + "&token=" + _userToken;
+            Debug.Log(url);
             StartCoroutine(Get(url, JudgeCapturePetHandler));
         }
         else
         {
-            EventDispatcher.TriggerEvent("RefreshRoomStatus");
+            EventDispatcher.TriggerEvent("RefreshRoomStatus",false);
         }
     }
 
     private void JudgeCapturePetHandler(string json)
     {
+        Debug.Log(json);
         JsonData data = JsonMapper.ToObject(json);
         if((int)data["code"] == 0)
         {
+            Debug.Log("成功！");
             EventDispatcher.TriggerEvent("ShowRoomStatus");
         }
         else
         {
-            EventDispatcher.TriggerEvent("RefreshRoomStatus");
+            Debug.Log("失败");
+            EventDispatcher.TriggerEvent("RefreshRoomStatus",true);
         }
     }
-
     #endregion
 
     #region PrivateFunc
@@ -187,13 +203,13 @@ public class OSBridgeManager : MonoSingleton<OSBridgeManager>
         if ((int)data["code"] == 0)
         {
             _roomStatus = JsonMapper.ToObject<RoomStatus>(json);
-            if (_roomStatus.data.pet1_count == 0 && _roomStatus.data.pet2_count == 0 && _roomStatus.data.pet3_count == 0 && _roomStatus.data.status == "start")
+            if (_roomStatus.data.status == "end")
             {
                 StartCoroutine(Get(_historyURL + _roomID, GetHistoryInfoHandler));
             }
             else
             {
-                EventDispatcher.TriggerEvent("RefreshRoomStatus");
+                EventDispatcher.TriggerEvent("RefreshRoomStatus",false);
             }
         }
         else
@@ -201,6 +217,11 @@ public class OSBridgeManager : MonoSingleton<OSBridgeManager>
             Debug.LogError("Json Error " + data["msg"]);
         }
         StartCoroutine(Timer(_roomStatusUpdateInterval, RepateGetRoomStatusHandler));
+    }
+
+    private void RepateGetRoomStatusHandler()
+    {
+        StartCoroutine(Get(_roomStatusURL + _roomID, GetRoomStatusHandler));
     }
 
     private void GetHistoryInfoHandler(string json)
@@ -246,12 +267,6 @@ public class OSBridgeManager : MonoSingleton<OSBridgeManager>
         {
             EventDispatcher.TriggerEvent("ShowHistory");
         }
-    }
-
-
-    private void RepateGetRoomStatusHandler()
-    {
-        StartCoroutine(Get(_roomStatusURL + _roomID, GetRoomStatusHandler));
     }
 
     private IEnumerator Timer(int seconds, Action handler)

@@ -14,7 +14,7 @@ public class RotateAround : MonoBehaviour
     private Camera mainCamera;
     private float zMinDis;
     private Animation screenAnimation;
-    private float lastAnimationTime = 0;
+    private float lastAnimationTime;
     private string lastAnimationName = "screenmove1";
     private ConfigModule configModule;
     private bool isCapturePaused = true;
@@ -22,36 +22,59 @@ public class RotateAround : MonoBehaviour
 
     void Start()
     {
-        InitialRotate(null);
+        InitialRotate();
         configModule = ModuleManager.Instance.Get<ConfigModule>();
-        StartCoroutine(GameHelper(28));
+        //StartCoroutine(GameHelper(28));
     }
 
-    private void InitialRotate(string message)
+    private void OnEnable()
+    {
+        EventDispatcher.AddEvent("InitCapture", InitialRotate);
+        EventDispatcher.AddEvent<string>("OnCapture", RotatePauseHandler);
+        EventDispatcher.AddEvent("GoOnCapture", RotateGoOnHandler);
+    }
+
+    private void OnDisable()
+    {
+        EventDispatcher.AddEvent("InitCapture", InitialRotate);
+        EventDispatcher.RemoveEvent<string>("OnCapture", RotatePauseHandler);
+        EventDispatcher.RemoveEvent("GoOnCapture", RotateGoOnHandler);
+    }
+
+    private void InitialRotate()
     {
         if (mainCamera == null)
         {
             mainCamera = Camera.main;
         }
+        
         rotatePoint = mainCamera.transform.position;
-        LookAtCamera = transform.GetChild(0).GetChild(0);
+        LookAtCamera = transform.Find("LevelAxis").GetChild(0);
         gyroController = mainCamera.GetComponent<GyroController>();
-        StartCoroutine(WorldRotate(false, true,Random.Range(40f, 320f)));
+        StartCoroutine(WorldRotate(false, true, Random.Range(40f, 320f)));
         screenAnimation = transform.GetChild(0).GetComponent<Animation>();
-        HandleScreenMoveAnimation(false);
+        lastAnimationTime = RandomUtil.Range(0, screenAnimation[lastAnimationName].length);
+        HandleScreenMoveAnimation(true);
     }
 
-    private void RotatePauseHandler()
+    private void RotatePauseHandler(string name)
     {
-        isCapturePaused = true;
-        HandleScreenMoveAnimation(false);
+        if (name == LookAtCamera.GetChild(0).name)
+        {
+            GameObject particle = Instantiate(Resources.Load<GameObject>("Particle/1"));
+            particle.transform.SetParent(LookAtCamera);
+            particle.transform.localPosition = new Vector3(0, 0, 1f);
+            particle.transform.localRotation = Quaternion.identity;
+            isCapturePaused = true;
+            HandleScreenMoveAnimation(false);
+        }
     }
 
     private void RotateGoOnHandler()
     {
         isCapturePaused = false;
         bool isworldWise = (((int)Random.Range(0.001f, 1.999f)) == 1) ? true : false;
-        StartCoroutine(WorldRotate(true, isworldWise,Random.Range(30f, 90f)));
+        StartCoroutine(WorldRotate(true, isworldWise, Random.Range(30f, 90f)));
         HandleScreenMoveAnimation(true);
     }
 
@@ -175,7 +198,7 @@ public class RotateAround : MonoBehaviour
 
     private void ForceCapture()
     {
-        if(gyroController!=null)
+        if (gyroController != null)
         {
             gyroController.DetachGyro();
         }
@@ -188,7 +211,7 @@ public class RotateAround : MonoBehaviour
 
     private void ForceIntoFOV()
     {
-        
+
         Vector3 cameraDir = mainCamera.transform.forward;
         Vector3 cameraRightDir = mainCamera.transform.right;
         cameraDir = new Vector3(cameraDir.x, 0, cameraDir.z);
@@ -196,100 +219,110 @@ public class RotateAround : MonoBehaviour
         Vector3 petDir = transform.position.normalized;
         float currentRotateAngle = Vector3.Angle(cameraDir, petDir);
         float currentParalelAngle = Vector3.Angle(cameraRightDir, petDir);
-        
+
         if (currentRotateAngle > 10)
         {
             bool clockWis = currentParalelAngle > 90 ? true : false;
             StartCoroutine(WorldRotate(true, clockWis, currentRotateAngle));
         }
-      
     }
-
-    private void OnEnable()
-    {
-        EventDispatcher.AddEvent("OnCaptured", RotatePauseHandler);
-        EventDispatcher.AddEvent("GoOnCapture", RotateGoOnHandler);
-        EventDispatcher.AddEvent<string>("CapturePet", InitialRotate);
-    }
-
-    private void OnDisable()
-    {
-        EventDispatcher.RemoveEvent("OnCaptured", RotatePauseHandler);
-        EventDispatcher.RemoveEvent("GoOnCapture", RotateGoOnHandler);
-        EventDispatcher.RemoveEvent<string>("CapturePet", InitialRotate);
-    }
-
-    private bool IsInCameraFOV()
-    {
-        Vector3 localPos = mainCamera.transform.InverseTransformPoint(transform.position);
-        if (localPos.z <= 0)
-        {
-            return false;
-        }
-        else
-        {
-            float halfFOV = mainCamera.fieldOfView * 0.5f * Mathf.Deg2Rad;
-            float aspet = mainCamera.aspect;
-            float height = localPos.z * Mathf.Tan(halfFOV);
-            float width = height * aspet;
-
-            if (localPos.x < -width || localPos.x > width || localPos.y < -height || localPos.y > height)
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private Vector3[] GetRotateAxis(Transform trans)
-    {
-        Vector3 Axis1 = (trans.position - mainCamera.transform.position).normalized;
-        if (Axis1.z != 0)
-        {
-            Vector3[] values = new Vector3[2];
-            float TAN15 = Mathf.Tan(15 * Mathf.Deg2Rad);
-            values[0].y = 1 / Mathf.Sqrt(1 + POW2(TAN15));
-            values[1].y = values[0].y;
-            if (Axis1.x != 0)
-            {
-                values[0].z = -Axis1.y * Axis1.z * Mathf.Sqrt(1 + POW2(TAN15)) +
-                Mathf.Sqrt(POW2(Axis1.y * Axis1.z) * (1 + POW2(TAN15)) - (1 + POW2(TAN15)) * (POW2(Axis1.x) + POW2(Axis1.z)) * (POW2(Axis1.y) - POW2(Axis1.x * TAN15)));
-                values[1].z = -Axis1.y * Axis1.z * Mathf.Sqrt(1 + POW2(TAN15)) -
-                Mathf.Sqrt(POW2(Axis1.y * Axis1.z) * (1 + POW2(TAN15)) - (1 + POW2(TAN15)) * (POW2(Axis1.x) + POW2(Axis1.z)) * (POW2(Axis1.y) - POW2(Axis1.x * TAN15)));
-                values[0].x = -(Axis1.z * values[0].z + Axis1.y / (Mathf.Sqrt(1 + POW2(TAN15)))) / Axis1.x;
-                values[1].x = -(Axis1.z * values[1].z + Axis1.y / (Mathf.Sqrt(1 + POW2(TAN15)))) / Axis1.x;
-
-            }
-            else
-            {
-                values[0].z = -Axis1.y * values[0].y / Axis1.z;
-                values[1].z = values[0].z;
-                values[0].x = Mathf.Sqrt(1 - POW2(values[0].y) - POW2(values[0].z));
-                values[1].x = -values[0].x;
-            }
-            return values;
-        }
-        else
-        {
-            if (Axis1.x != 0)
-            {
-                Vector3[] values = new Vector3[2];
-                float TAN15 = Mathf.Tan(15 * Mathf.Deg2Rad);
-                values[0].y = 1 / Mathf.Sqrt(1 + POW2(TAN15));
-                values[0].x = -(values[0].y * Axis1.y) / Axis1.x;
-                values[0].z = Mathf.Sqrt(POW2(Axis1.x * TAN15) - POW2(Axis1.y) / (POW2(Axis1.x) * (1 + POW2(TAN15))));
-                values[1].y = values[0].y;
-                values[1].x = values[0].x;
-                values[1].z = -values[0].z;
-                return values;
-            }
-            return null;
-        }
-    }
-
-    private float POW2(float v)
-    {
-        return Mathf.Pow(v, 2);
-    }
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+ private bool IsInCameraFOV()
+ {
+     Vector3 localPos = mainCamera.transform.InverseTransformPoint(transform.position);
+     if (localPos.z <= 0)
+     {
+         return false;
+     }
+     else
+     {
+         float halfFOV = mainCamera.fieldOfView * 0.5f * Mathf.Deg2Rad;
+         float aspet = mainCamera.aspect;
+         float height = localPos.z * Mathf.Tan(halfFOV);
+         float width = height * aspet;
+
+         if (localPos.x < -width || localPos.x > width || localPos.y < -height || localPos.y > height)
+         {
+             return false;
+         }
+     }
+     return true;
+ }
+
+ private Vector3[] GetRotateAxis(Transform trans)
+ {
+     Vector3 Axis1 = (trans.position - mainCamera.transform.position).normalized;
+     if (Axis1.z != 0)
+     {
+         Vector3[] values = new Vector3[2];
+         float TAN15 = Mathf.Tan(15 * Mathf.Deg2Rad);
+         values[0].y = 1 / Mathf.Sqrt(1 + POW2(TAN15));
+         values[1].y = values[0].y;
+         if (Axis1.x != 0)
+         {
+             values[0].z = -Axis1.y * Axis1.z * Mathf.Sqrt(1 + POW2(TAN15)) +
+             Mathf.Sqrt(POW2(Axis1.y * Axis1.z) * (1 + POW2(TAN15)) - (1 + POW2(TAN15)) * (POW2(Axis1.x) + POW2(Axis1.z)) * (POW2(Axis1.y) - POW2(Axis1.x * TAN15)));
+             values[1].z = -Axis1.y * Axis1.z * Mathf.Sqrt(1 + POW2(TAN15)) -
+             Mathf.Sqrt(POW2(Axis1.y * Axis1.z) * (1 + POW2(TAN15)) - (1 + POW2(TAN15)) * (POW2(Axis1.x) + POW2(Axis1.z)) * (POW2(Axis1.y) - POW2(Axis1.x * TAN15)));
+             values[0].x = -(Axis1.z * values[0].z + Axis1.y / (Mathf.Sqrt(1 + POW2(TAN15)))) / Axis1.x;
+             values[1].x = -(Axis1.z * values[1].z + Axis1.y / (Mathf.Sqrt(1 + POW2(TAN15)))) / Axis1.x;
+
+         }
+         else
+         {
+             values[0].z = -Axis1.y * values[0].y / Axis1.z;
+             values[1].z = values[0].z;
+             values[0].x = Mathf.Sqrt(1 - POW2(values[0].y) - POW2(values[0].z));
+             values[1].x = -values[0].x;
+         }
+         return values;
+     }
+     else
+     {
+         if (Axis1.x != 0)
+         {
+             Vector3[] values = new Vector3[2];
+             float TAN15 = Mathf.Tan(15 * Mathf.Deg2Rad);
+             values[0].y = 1 / Mathf.Sqrt(1 + POW2(TAN15));
+             values[0].x = -(values[0].y * Axis1.y) / Axis1.x;
+             values[0].z = Mathf.Sqrt(POW2(Axis1.x * TAN15) - POW2(Axis1.y) / (POW2(Axis1.x) * (1 + POW2(TAN15))));
+             values[1].y = values[0].y;
+             values[1].x = values[0].x;
+             values[1].z = -values[0].z;
+             return values;
+         }
+         return null;
+     }
+ }
+
+ private float POW2(float v)
+ {
+     return Mathf.Pow(v, 2);
+ }
+ */

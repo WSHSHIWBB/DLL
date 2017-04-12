@@ -11,27 +11,45 @@ public class MainCameraAim : MonoBehaviour
 
     [SerializeField]
     private float captureTime = 1f;
+    private float lastTime = 0;
+    private bool isCapturePaused = true;
 
-    private float lastTime=0;
-    private bool isCapturePaused = false;
-    private Transform worldRotate;
-    private Transform LookAtCamera;
     private AudioSource audioSource;
     private AudioClip slowAlarmClip;
     private AudioClip fastAlarmClip;
     private GyroController gyroController;
 
+    private Transform Pet1;
+    private Transform Pet2;
+    private Transform Pet3;
+
+    private void OnEnable()
+    {
+		EventDispatcher.AddEvent("InitCapture", InitCameraHandler);
+        EventDispatcher.AddEvent<string>("OnCapture", PauseCaptureHandler);
+        EventDispatcher.AddEvent("GoOnCapture", GoOnCaptureHandler);   
+    }
+
+    private void OnDisable()
+    {
+		EventDispatcher.RemoveEvent("InitCapture", InitCameraHandler);
+        EventDispatcher.RemoveEvent<string>("OnCapture", PauseCaptureHandler);
+        EventDispatcher.RemoveEvent("GoOnCapture", GoOnCaptureHandler);     
+    }
+
     private void Start()
     {
-        worldRotate = GameObject.Find("WorldRotate").transform;
-        LookAtCamera = worldRotate.GetChild(0).GetChild(0);
+        Pet1 = GameObject.Find("Pet1") ? GameObject.Find("Pet1").transform : null;
+        Pet2 = GameObject.Find("Pet2") ? GameObject.Find("Pet2").transform : null;
+        Pet3 = GameObject.Find("Pet3") ? GameObject.Find("Pet3").transform : null;
         audioSource = GetComponent<AudioSource>();
         slowAlarmClip = Instantiate(Resources.Load<AudioClip>("Audio/Slow"));
         fastAlarmClip = Instantiate(Resources.Load<AudioClip>("Audio/Fast"));
-        gyroController = GetComponent<GyroController>();
+        gyroController = GetComponent<GyroController>();   
     }
 
-    void Update ()
+
+    void Update()
     {
         if (!isCapturePaused)
         {
@@ -41,7 +59,7 @@ public class MainCameraAim : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(aimRay, out hit, 100f))
             {
-                if (hit.collider.tag == "Pet")
+                if (hit.collider.attachedRigidbody.tag == "Pet")
                 {
                     EventDispatcher.TriggerEvent("OnAimed");
                     lastTime += Time.deltaTime;
@@ -50,6 +68,7 @@ public class MainCameraAim : MonoBehaviour
                         string name = hit.collider.attachedRigidbody.name.Replace("(Clone)", "");
                         EventDispatcher.TriggerEvent("OnCapture", name);
                         lastTime = 0;
+                        transform.LookAt(hit.collider.transform);
                     }
                 }
             }
@@ -58,9 +77,23 @@ public class MainCameraAim : MonoBehaviour
                 EventDispatcher.TriggerEvent("OnNotAimed");
                 lastTime = 0f;
             }
+        }
 
+        ControlAlarm(isCapturePaused, Pet1);
+        ControlAlarm(isCapturePaused, Pet2);
+        ControlAlarm(isCapturePaused, Pet3);
+    }
+
+    private void ControlAlarm(bool isPaused, Transform petTrans)
+    {
+        if(petTrans==null)
+        {
+            return;
+        }
+        if (!isCapturePaused)
+        {
             Vector3 cameraDir = transform.forward;
-            Vector3 petDir = worldRotate.position.normalized;
+            Vector3 petDir = petTrans.position.normalized;
             float cam_pet_Angle = Vector3.Angle(cameraDir, petDir);
             if (cam_pet_Angle >= 0 && cam_pet_Angle < ALARM_LEVEL_4)
             {
@@ -88,16 +121,16 @@ public class MainCameraAim : MonoBehaviour
         }
         else
         {
-            if(audioSource.isPlaying)
+            if (audioSource.isPlaying)
             {
                 audioSource.Stop();
             }
         }
-	}
+    }
 
-    private void PlayAlarm(AudioClip clip,float volume,float pitch)
+    private void PlayAlarm(AudioClip clip, float volume, float pitch)
     {
-        if(audioSource.isPlaying&&audioSource.clip!=clip || !audioSource.isPlaying)
+        if (audioSource.isPlaying && audioSource.clip != clip || !audioSource.isPlaying)
         {
             audioSource.clip = clip;
             audioSource.Play();
@@ -109,55 +142,23 @@ public class MainCameraAim : MonoBehaviour
         }
     }
 
-    private void ResetPetHandler()
+    private void InitCameraHandler()
     {
         transform.rotation = Quaternion.identity;
+        isCapturePaused = false;
     }
 
-    private void PauseCaptureHandler()
+    private void PauseCaptureHandler(string name)
     {
         gyroController.DetachGyro();
-        isCapturePaused = true;
         lastTime = 0;
-        transform.LookAt(LookAtCamera.position);
-        GameObject particle =Instantiate(Resources.Load<GameObject>("Particle/1"));
-        particle.transform.SetParent(LookAtCamera);
-        particle.transform.localPosition = new Vector3(0,0,1f);
-        particle.transform.localRotation = Quaternion.identity;
+        isCapturePaused = true;
     }
 
     private void GoOnCaptureHandler()
     {
-        isCapturePaused = false;
         gyroController.AttachGyro();
+        isCapturePaused = false;
     }
-
-    private void PauseMainCameAimHandler()
-    {
-        gyroController.DetachGyro();
-        isCapturePaused = true;
-        lastTime = 0;
-    }
-
-   
-    /*
-    private void OnEnable()
-    {
-        
-        EventDispatcher.AddEvent("OnCapture",PauseCaptureHandler);
-        EventDispatcher.AddEvent("GoOnCapture", GoOnCaptureHandler);
-        EventDispatcher.AddEvent("PauseMainCameAim", PauseMainCameAimHandler);
-        EventDispatcher.AddEvent("ResetPet", ResetPetHandler);
-
-    }
-
-    private void OnDisable()
-    {
-        EventDispatcher.RemoveEvent("OnCapture",PauseCaptureHandler);
-        EventDispatcher.RemoveEvent("GoOnCapture", GoOnCaptureHandler);
-        EventDispatcher.RemoveEvent("PauseMainCameAim", PauseMainCameAimHandler);
-        EventDispatcher.RemoveEvent("ResetPet", ResetPetHandler);
-    }
-    */
 
 }

@@ -28,7 +28,7 @@ public class CameraQuard: MonoBehaviour
             {
                 if (!WebCamTexture.devices[i].isFrontFacing)
                 {
-                    webCam = new WebCamTexture(WebCamTexture.devices[i].name,Screen.width,Screen.height);
+                    webCam = new WebCamTexture(WebCamTexture.devices[i].name,Screen.width,Screen.height,60);
                     material.mainTexture = webCam;
                     webCam.Play();
                     float scalY = transform.localScale.x *(float)webCam.height / (float)webCam.width;

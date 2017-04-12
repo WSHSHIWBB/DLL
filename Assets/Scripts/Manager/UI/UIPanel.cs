@@ -5,7 +5,7 @@ using VRFrameWork;
 using DG.Tweening;
 using System;
 
-public class UIPanel2 : MonoBehaviour
+public class UIPanel : MonoBehaviour
 {
     //Delegate for Timer to Call per second
     public delegate void AfterOneSecondHandler(int lastSeconds);
@@ -13,7 +13,7 @@ public class UIPanel2 : MonoBehaviour
     //Private
     private string _currentPetName;
     private bool _isCaughtPet;
-   
+
     //LoadingPage
     private Transform _loadingPage;
 
@@ -96,30 +96,31 @@ public class UIPanel2 : MonoBehaviour
     {
         EventDispatcher.AddEvent("ShowHistory", ShowHistoryInfoHandler);
         EventDispatcher.AddEvent("ShowRoomStatus", ShowRoomStatusHandler);
-        EventDispatcher.AddEvent("RefreshRoomStatus", RefreshRoomStatusHandler);
+        EventDispatcher.AddEvent<bool>("RefreshRoomStatus", RefreshRoomStatusHandler);
+        EventDispatcher.AddEvent("InitCapture", InitCaptureHandler);
     }
 
     private void OnDisable()
     {
         EventDispatcher.RemoveEvent("ShowHistory", ShowHistoryInfoHandler);
         EventDispatcher.RemoveEvent("ShowRoomStatus", ShowRoomStatusHandler);
-        EventDispatcher.RemoveEvent("RefreshRoomStatus", RefreshRoomStatusHandler);
-
+        EventDispatcher.RemoveEvent<bool>("RefreshRoomStatus", RefreshRoomStatusHandler);
+        EventDispatcher.RemoveEvent("InitCapture", InitCaptureHandler);
     }
 
     private void Start()
     {
-        _aimedSprite= Resources.Load<GameObject>("Sprites/Prefabs/CapturedAim").GetComponent<SpriteRenderer>().sprite;
-        _notAimedSprite= Resources.Load<GameObject>("Sprites/Prefabs/NotCaptureAim").GetComponent<SpriteRenderer>().sprite;
-
-        InitCapture();
+        _aimedSprite = Resources.Load<GameObject>("Sprites/Prefabs/CapturedAim").GetComponent<SpriteRenderer>().sprite;
+        _notAimedSprite = Resources.Load<GameObject>("Sprites/Prefabs/NotCaptureAim").GetComponent<SpriteRenderer>().sprite;
     }
 
     /// <summary>
     /// The function 
     /// </summary>
-    public void  InitCapture()
+    public void InitCaptureHandler()
     {
+        DOTween.KillAll();
+        StopAllCoroutines();
         _currentPetName = null;
         _isCaughtPet = false;
         HideLoadingPage();
@@ -130,7 +131,7 @@ public class UIPanel2 : MonoBehaviour
     #region HintAndCountDown
     private void HideLoadingPage()
     {
-        if(_loadingPage.gameObject.activeInHierarchy)
+        if (_loadingPage.gameObject.activeInHierarchy)
         {
             _loadingPage.gameObject.SetActive(false);
         }
@@ -153,7 +154,7 @@ public class UIPanel2 : MonoBehaviour
 
     private void Count5DownHandler(int lastSeconds)
     {
-        if(lastSeconds==0)
+        if (lastSeconds == 0)
         {
             _hintPage.gameObject.SetActive(false);
             StartCapture();
@@ -161,7 +162,7 @@ public class UIPanel2 : MonoBehaviour
         }
         Sprite sprite = Resources.Load<GameObject>("Sprites/Prefabs/" + lastSeconds.ToString()).GetComponent<SpriteRenderer>().sprite;
         _countDownImage.sprite = sprite;
-        if(!_countDownImage.gameObject.activeInHierarchy)
+        if (!_countDownImage.gameObject.activeInHierarchy)
         {
             _countDownImage.gameObject.SetActive(true);
         }
@@ -169,7 +170,7 @@ public class UIPanel2 : MonoBehaviour
     #endregion
 
     #region CaptureLogic
-   // ShowCapturePage after CountDown
+    // ShowCapturePage after CountDown
     private void StartCapture()
     {
         _captureButton.gameObject.SetActive(false);
@@ -182,7 +183,7 @@ public class UIPanel2 : MonoBehaviour
         _capturePage.DOScale(1, 0.3f).SetUpdate(true);
         UIEventListener.AddUIListener(_backButton.gameObject).SetEventHandler(EnumUIinputType.OnClick, new UIEventHandler(BackButtonOnClickHandler));
         // to do Show pet
-        
+
         EventDispatcher.AddEvent("OnAimed", OnAimedHandler);
         EventDispatcher.AddEvent("OnNotAimed", OnNotAimedHandler);
         EventDispatcher.AddEvent<string>("OnCapture", OnCaptureHandler);
@@ -194,7 +195,7 @@ public class UIPanel2 : MonoBehaviour
         if (lastSeconds == 0)
         {
             EndCapture();
-            OSBridgeManager.Instance.OnUnityBack(_isCaughtPet?1:0);
+            OSBridgeManager.Instance.OnUnityBack(_isCaughtPet ? 1 : 0);
         }
         int hour = lastSeconds / 3600;
         int minute = (lastSeconds % 3600) / 60;
@@ -205,10 +206,10 @@ public class UIPanel2 : MonoBehaviour
     }
 
 
-     //Aim image
+    //Aim image
     private void OnAimedHandler()
     {
-        if(_aimImage.sprite!=_aimedSprite)
+        if (_aimImage.sprite != _aimedSprite)
         {
             _aimImage.sprite = _aimedSprite;
         }
@@ -218,7 +219,7 @@ public class UIPanel2 : MonoBehaviour
     //Aim image
     private void OnNotAimedHandler()
     {
-        if(_aimImage.sprite!=_notAimedSprite)
+        if (_aimImage.sprite != _notAimedSprite)
         {
             _aimImage.sprite = _notAimedSprite;
         }
@@ -227,42 +228,50 @@ public class UIPanel2 : MonoBehaviour
     private void OnCaptureHandler(string petName)
     {
         _currentPetName = petName;
-        StartCoroutine(Timer(3, GoOnCaptureHandler));
+        if (!_captureButton.gameObject.activeInHierarchy)
+        {
+            _captureButton.gameObject.SetActive(true);
+            UIEventListener.AddUIListener(_captureButton.gameObject).SetEventHandler(EnumUIinputType.OnClick, new UIEventHandler(CaptureButtonOnClickHandler));
+            UIEventListener.AddUIListener(_aimImage.gameObject).SetEventHandler(EnumUIinputType.OnClick, new UIEventHandler(CaptureButtonOnClickHandler));
+        }
+        if (Time.timeScale != 0)
+        {
+            Time.timeScale = 0;
+        }
+        StartCoroutine("HideCaptureButton", 3);
     }
 
-    private void GoOnCaptureHandler(int lastSeconds)
+    private void ForceHideCaptureButton()
     {
-        if(lastSeconds==0)
+        _captureButton.gameObject.SetActive(false);
+        UIEventListener.RemoveUIListener(_captureButton.gameObject);
+        UIEventListener.RemoveUIListener(_aimImage.gameObject);
+        if (Time.timeScale != 1)
         {
-            _captureButton.gameObject.SetActive(false);
-            UIEventListener.RemoveUIListener(_captureButton.gameObject);
-            UIEventListener.RemoveUIListener(_aimImage.gameObject);
-            if (Time.timeScale!=1)
-            {
-                Time.timeScale = 1;
-            }
-            _currentPetName = null;
+            Time.timeScale = 1;
         }
-        else
-        {
-            if(!_captureButton.gameObject.activeInHierarchy)
-            {
-                _captureButton.gameObject.SetActive(true);
-                UIEventListener.AddUIListener(_captureButton.gameObject).SetEventHandler(EnumUIinputType.OnClick, new UIEventHandler(CaptureButtonOnClickHandler));
-                UIEventListener.AddUIListener(_aimImage.gameObject).SetEventHandler(EnumUIinputType.OnClick, new UIEventHandler(CaptureButtonOnClickHandler));
-            }
-            if(Time.timeScale!=0)
-            {
-                Time.timeScale = 0;
-            }
-        }
+        EventDispatcher.TriggerEvent("GoOnCapture"); 
     }
 
-    
+    private IEnumerator HideCaptureButton(int second)
+    {
+        yield return new WaitForSecondsRealtime(second);
+
+        _captureButton.gameObject.SetActive(false);
+        UIEventListener.RemoveUIListener(_captureButton.gameObject);
+        UIEventListener.RemoveUIListener(_aimImage.gameObject);
+        if (Time.timeScale != 1)
+        {
+            Time.timeScale = 1;
+        }
+        _currentPetName = null;
+        EventDispatcher.TriggerEvent("GoOnCapture");
+    }
+
     //Function of BackButton 
     private void BackButtonOnClickHandler(GameObject linster, object _arg, object[] _params)
     {
-        if(!_backCheck.gameObject.activeSelf)
+        if (!_backCheck.gameObject.activeSelf)
         {
             ShowBackCheck();
         }
@@ -274,12 +283,12 @@ public class UIPanel2 : MonoBehaviour
     {
         _backCheck.transform.localScale = Vector3.zero;
         _backCheck.gameObject.SetActive(true);
-        Tweener tweener = _backCheck.DOScale(1, 0.3f);
+        Tweener tweener = _backCheck.DOScale(1, 0.3f).SetUpdate(true);
         tweener.OnComplete(new TweenCallback(() => { Time.timeScale = 0; }));
         UIEventListener.AddUIListener(_yesButton.gameObject).SetEventHandler(EnumUIinputType.OnClick, new UIEventHandler(YesButtonOnClickHandler));
         UIEventListener.AddUIListener(_noButton.gameObject).SetEventHandler(EnumUIinputType.OnClick, new UIEventHandler(NoButtonOnClickHandler));
     }
- 
+
     //Function of NoButton on BackCheck
     private void NoButtonOnClickHandler(GameObject linster, object _arg, object[] _params)
     {
@@ -306,8 +315,10 @@ public class UIPanel2 : MonoBehaviour
     //Function be call when captureButton has been pressed
     private void CaptureButtonOnClickHandler(GameObject linster, object _arg, object[] _params)
     {
+        Debug.Log((_currentPetName));
+        StopCoroutine("HideCaptureButton");
+        ForceHideCaptureButton();
         OSBridgeManager.Instance.JudgeCapturePetOnServer(_currentPetName);
-        Debug.Log(_currentPetName);
     }
 
     private void EndCapture()
@@ -329,7 +340,7 @@ public class UIPanel2 : MonoBehaviour
     {
         EndCapture();
         _isCaughtPet = true;
-        if(_currentPetName==null)
+        if (_currentPetName == null)
         {
             Debug.LogError("Big Error!");
         }
@@ -356,13 +367,16 @@ public class UIPanel2 : MonoBehaviour
         OSBridgeManager.Instance.OnUnityBack(1);
     }
 
-    private void RefreshRoomStatusHandler()
+    private void RefreshRoomStatusHandler(bool isForceEmptyPetName)
     {
-        Debug.Log(11);
-        string cont = OSBridgeManager.Instance.GetRoomStatusPlayerNum();
-        if(cont!=null)
+        if(isForceEmptyPetName)
         {
-            _roomStatusNumText.text = cont;
+            _currentPetName = null;
+        }
+        string Num = OSBridgeManager.Instance.GetRoomStatusPlayerNum();
+        if (Num != null)
+        {
+            _roomStatusNumText.text = Num;
         }
     }
 
@@ -372,26 +386,27 @@ public class UIPanel2 : MonoBehaviour
 
     private void ShowHistoryInfoHandler()
     {
+        DOTween.KillAll();
         EndCapture();
         EndRoomStatus();
         string[] userNames = OSBridgeManager.Instance.GetUserNames();
-        if(userNames==null)
+        if (userNames == null)
         {
             Debug.LogError("The userNames is null!");
             return;
         }
 
-        if(_layoutGroupTran.childCount!=0)
+        if (_layoutGroupTran.childCount != 0)
         {
-            for(int i=0;i<_layoutGroupTran.childCount;++i)
+            for (int i = 0; i < _layoutGroupTran.childCount; ++i)
             {
                 _layoutGroupTran.GetChild(i).gameObject.SetActive(false);
             }
         }
 
-        for(int i=0;i<userNames.Length;++i)
+        for (int i = 0; i < userNames.Length; ++i)
         {
-            if (i< _layoutGroupTran.childCount)
+            if (i < _layoutGroupTran.childCount)
             {
                 _layoutGroupTran.GetChild(i).GetComponentByPath<Text>("BG/NameText").text = userNames[i];
                 _layoutGroupTran.GetChild(i).GetComponentByPath<Image>("BG/PlayerIcon").sprite = OSBridgeManager.Instance.GetSpriteByName(userNames[i]);
@@ -401,7 +416,7 @@ public class UIPanel2 : MonoBehaviour
             {
                 GameObject prefab = Instantiate(Resources.Load<GameObject>("Sprites/Prefabs/UserInfoItem"), _layoutGroupTran, false);
                 prefab.GetComponentByPath<Text>("BG/NameText").text = userNames[i];
-                prefab.GetComponentByPath<Image>("BG/PlayerIcon").sprite = OSBridgeManager.Instance.GetSpriteByName(userNames[i]); 
+                prefab.GetComponentByPath<Image>("BG/PlayerIcon").sprite = OSBridgeManager.Instance.GetSpriteByName(userNames[i]);
             }
         }
 

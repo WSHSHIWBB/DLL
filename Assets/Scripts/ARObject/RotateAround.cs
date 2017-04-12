@@ -111,7 +111,7 @@ public class RotateAround : MonoBehaviour
 		}
 		else if(!isInit && !isShow)
 		{
-			Invoke (ShowPetHandler, 1f);
+			Invoke ("ShowPetHandler", 1f);
 		}
 	}
 
@@ -141,7 +141,7 @@ public class RotateAround : MonoBehaviour
     private void RotateGoOnHandler()
     {
         isCapturePaused = false;
-		StartCoroutine(WorldRotate(true, RandomUtil.Bool, Random.Range(30f, 90f)*_rotateSpeed));
+		StartCoroutine(WorldRotate(true, RandomUtil.Bool(), Random.Range(30f, 90f),_rotateSpeed));
 		HandleScreenMoveAnimation(true,_rotateSpeed);
     }
 

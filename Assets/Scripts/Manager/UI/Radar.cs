@@ -49,7 +49,7 @@ public class Radar : MonoBehaviour
         {
             Image.gameObject.SetActive(false);
         }
-        else
+		else if(transform.GetChild(0).gameObject.activeInHierarchy)
         {
             Image.gameObject.SetActive(true);
         }

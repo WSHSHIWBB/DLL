@@ -178,16 +178,10 @@ public class OSBridgeManager : MonoSingleton<OSBridgeManager>
 		{
 		case "普通宠物":
 			return _roomStatus.data.pet1_count!=0;
-			;
-			break;
 		case "高级宠物":
 			return _roomStatus.data.pet2_count!=0;
-			;
-			break;
 		case "金宠":
-			return _roomStatus.data.pet2_count!=0;;
-			;
-			break;
+			return _roomStatus.data.pet2_count!=0;
 		default:
 			Debug.LogError ("petName Error!");
 			return false;

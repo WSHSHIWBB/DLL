@@ -164,6 +164,36 @@ public class OSBridgeManager : MonoSingleton<OSBridgeManager>
         return _name_Sprite_Dic[name];
     }
 
+	public bool IsRoomStatusInit()
+	{
+		return _roomStatus != null;
+	}
+
+	public bool IsShowPetByName(string name)
+	{
+		if (_roomStatus == null) {
+			return false;
+		}
+		switch (name) 
+		{
+		case "普通宠物":
+			return _roomStatus.data.pet1_count!=0;
+			;
+			break;
+		case "高级宠物":
+			return _roomStatus.data.pet2_count!=0;
+			;
+			break;
+		case "金宠":
+			return _roomStatus.data.pet2_count!=0;;
+			;
+			break;
+		default:
+			Debug.LogError ("petName Error!");
+			return false;
+		}
+	}
+
     public void JudgeCapturePetOnServer(string petName)
     {
         Debug.Log(petName);

@@ -182,7 +182,7 @@ public class UIPanel : MonoBehaviour
         _capturePage.gameObject.SetActive(true);
         _capturePage.DOScale(1, 0.3f).SetUpdate(true);
         UIEventListener.AddUIListener(_backButton.gameObject).SetEventHandler(EnumUIinputType.OnClick, new UIEventHandler(BackButtonOnClickHandler));
-        // to do Show pet
+		EventDispatcher.TriggerEvent("ShowPet");
 
         EventDispatcher.AddEvent("OnAimed", OnAimedHandler);
         EventDispatcher.AddEvent("OnNotAimed", OnNotAimedHandler);

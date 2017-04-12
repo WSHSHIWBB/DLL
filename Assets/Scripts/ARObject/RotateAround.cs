@@ -19,11 +19,23 @@ public class RotateAround : MonoBehaviour
     private ConfigModule configModule;
     private bool isCapturePaused = true;
     private GyroController gyroController;
+	private Transform _pet;
+	private float _rotateSpeed;
 
     void Start()
     {
-        InitialRotate();
-        configModule = ModuleManager.Instance.Get<ConfigModule>();
+		if (mainCamera == null)
+		{
+			mainCamera = Camera.main;
+		}
+
+		rotatePoint = mainCamera.transform.position;
+		LookAtCamera = transform.Find("LevelAxis").GetChild(0);
+		gyroController = mainCamera.GetComponent<GyroController>();
+		configModule = ModuleManager.Instance.Get<ConfigModule>();
+		screenAnimation = transform.GetChild(0).GetComponent<Animation>();
+		_pet = LookAtCamera.GetChild (0);
+		InitialRotate();
         //StartCoroutine(GameHelper(28));
     }
 
@@ -32,30 +44,86 @@ public class RotateAround : MonoBehaviour
         EventDispatcher.AddEvent("InitCapture", InitialRotate);
         EventDispatcher.AddEvent<string>("OnCapture", RotatePauseHandler);
         EventDispatcher.AddEvent("GoOnCapture", RotateGoOnHandler);
+		EventDispatcher.AddEvent("ShowPet", ShowPetHandler);
+		EventDispatcher.AddEvent<bool> ("RefreshRoomStatus", RefreshRoomStatusHandler);
     }
 
     private void OnDisable()
     {
-        EventDispatcher.AddEvent("InitCapture", InitialRotate);
+		EventDispatcher.RemoveEvent("InitCapture", InitialRotate);
         EventDispatcher.RemoveEvent<string>("OnCapture", RotatePauseHandler);
         EventDispatcher.RemoveEvent("GoOnCapture", RotateGoOnHandler);
+		EventDispatcher.RemoveEvent("ShowPet", ShowPetHandler);
+		EventDispatcher.RemoveEvent<bool> ("RefreshRoomStatus", RefreshRoomStatusHandler);
     }
 
     private void InitialRotate()
     {
-        if (mainCamera == null)
-        {
-            mainCamera = Camera.main;
-        }
-        
-        rotatePoint = mainCamera.transform.position;
-        LookAtCamera = transform.Find("LevelAxis").GetChild(0);
-        gyroController = mainCamera.GetComponent<GyroController>();
-        StartCoroutine(WorldRotate(false, true, Random.Range(40f, 320f)));
-        screenAnimation = transform.GetChild(0).GetComponent<Animation>();
+		float low;
+		float high;
+		switch (_pet.name) 
+		{
+		case "普通宠物":
+			low = 40;
+			high = 90;
+			_rotateSpeed = 0.9f;			
+			break;
+		case "高级宠物":
+			low = 130;
+			high = 200;
+			_rotateSpeed = 1.1f;
+			break;
+		case "金宠":
+			low = 240;
+			high = 320;
+			_rotateSpeed = 1.3f;
+			break;
+		default:
+			Debug.LogError ("petName Error!");
+			return;
+		}
+		StartCoroutine(WorldRotate(false, true, Random.Range(low, high)));
         lastAnimationTime = RandomUtil.Range(0, screenAnimation[lastAnimationName].length);
         HandleScreenMoveAnimation(true);
+		SetPetActive (false);
     }
+
+	private void SetPetActive(bool isActive)
+	{
+		if (isActive) {
+			if (_pet.gameObject.activeInHierarchy) {
+				_pet.gameObject.SetActive (true);
+			}
+		} else {
+			_pet.gameObject.SetActive (false);
+		}
+	}
+
+	private void ShowPetHandler()
+	{
+		bool isInit = OSBridgeManager.Instance.IsRoomStatusInit ();
+		bool isShow=OSBridgeManager.Instance.IsShowPetByName (_pet.name);
+		if (isInit && isShow) {
+			SetPetActive (true);
+			return;
+		} else if (isInit && !isShow) {
+			return;
+		}
+		else if(!isInit && !isShow)
+		{
+			Invoke (ShowPetHandler, 1f);
+		}
+	}
+
+	private void RefreshRoomStatusHandler(bool a)
+	{
+		bool isShow=OSBridgeManager.Instance.IsShowPetByName (_pet.name);
+		if (false == isShow) {
+			SetPetActive (false);
+		} else {
+			SetPetActive (true);
+		}
+	}
 
     private void RotatePauseHandler(string name)
     {
@@ -73,13 +141,13 @@ public class RotateAround : MonoBehaviour
     private void RotateGoOnHandler()
     {
         isCapturePaused = false;
-        bool isworldWise = (((int)Random.Range(0.001f, 1.999f)) == 1) ? true : false;
-        StartCoroutine(WorldRotate(true, isworldWise, Random.Range(30f, 90f)));
-        HandleScreenMoveAnimation(true);
+		StartCoroutine(WorldRotate(true, RandomUtil.Bool, Random.Range(30f, 90f)*_rotateSpeed));
+		HandleScreenMoveAnimation(true,_rotateSpeed);
     }
 
-    private void HandleScreenMoveAnimation(bool isStart)
+	private void HandleScreenMoveAnimation(bool isStart,float speed=1f)
     {
+		screenAnimation [lastAnimationName].speed = speed;
         if (isStart)
         {
             screenAnimation[lastAnimationName].time = lastAnimationTime;
@@ -99,7 +167,7 @@ public class RotateAround : MonoBehaviour
         }
     }
 
-    private IEnumerator WorldRotate(bool isContinuous, bool isClockWise, float rotateAngle)
+	private IEnumerator WorldRotate(bool isContinuous, bool isClockWise, float rotateAngle,float rotateSpeed=1f)
     {
         if (isContinuous)
         {
@@ -107,13 +175,13 @@ public class RotateAround : MonoBehaviour
             {
                 if (isClockWise)
                 {
-                    transform.RotateAround(rotatePoint, AxisDir, rotateAngle * Time.deltaTime);
+					transform.RotateAround(rotatePoint, AxisDir, rotateAngle * Time.deltaTime*rotateSpeed);
                 }
                 else
                 {
-                    transform.RotateAround(rotatePoint, -AxisDir, rotateAngle * Time.deltaTime);
+					transform.RotateAround(rotatePoint, -AxisDir, rotateAngle * Time.deltaTime*rotateSpeed);
                 }
-                rotateAngle -= rotateAngle * Time.deltaTime;
+				rotateAngle -= rotateAngle * Time.deltaTime*rotateSpeed;
                 rotateAngle = (rotateAngle < 0) ? 0 : rotateAngle;
                 yield return null;
             }

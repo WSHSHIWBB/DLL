@@ -45,11 +45,11 @@ public class Radar : MonoBehaviour
     private void ShowPetPos(RectTransform Image,Transform trans)
     {
         RectTransform PetPoint = Image.GetComponentByPath<RectTransform>("PetPoint");
-        if (trans.childCount == 0||!transform.GetChild(0).gameObject.activeInHierarchy)
+		if (trans.childCount == 0||!trans.GetChild(0).gameObject.activeInHierarchy)
         {
             Image.gameObject.SetActive(false);
         }
-		else if(transform.GetChild(0).gameObject.activeInHierarchy)
+		else if(trans.GetChild(0).gameObject.activeInHierarchy)
         {
             Image.gameObject.SetActive(true);
         }

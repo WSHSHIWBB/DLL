@@ -91,7 +91,7 @@ public class RotateAround : MonoBehaviour
 	private void SetPetActive(bool isActive)
 	{
 		if (isActive) {
-			if (_pet.gameObject.activeInHierarchy) {
+			if (!_pet.gameObject.activeInHierarchy) {
 				_pet.gameObject.SetActive (true);
 			}
 		} else {

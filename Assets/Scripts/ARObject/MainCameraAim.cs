@@ -27,14 +27,16 @@ public class MainCameraAim : MonoBehaviour
     {
 		EventDispatcher.AddEvent("InitCapture", InitCameraHandler);
         EventDispatcher.AddEvent<string>("OnCapture", PauseCaptureHandler);
-        EventDispatcher.AddEvent("GoOnCapture", GoOnCaptureHandler);   
+        EventDispatcher.AddEvent("GoOnCapture", GoOnCaptureHandler);
+        EventDispatcher.AddEvent("ShowPet", GoOnCaptureHandler);
     }
 
     private void OnDisable()
     {
 		EventDispatcher.RemoveEvent("InitCapture", InitCameraHandler);
         EventDispatcher.RemoveEvent<string>("OnCapture", PauseCaptureHandler);
-        EventDispatcher.RemoveEvent("GoOnCapture", GoOnCaptureHandler);     
+        EventDispatcher.RemoveEvent("GoOnCapture", GoOnCaptureHandler);
+        EventDispatcher.RemoveEvent("ShowPet", GoOnCaptureHandler);
     }
 
     private void Start()
@@ -145,7 +147,7 @@ public class MainCameraAim : MonoBehaviour
     private void InitCameraHandler()
     {
         transform.rotation = Quaternion.identity;
-        isCapturePaused = false;
+        isCapturePaused = true;
     }
 
     private void PauseCaptureHandler(string name)

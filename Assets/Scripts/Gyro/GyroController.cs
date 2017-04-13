@@ -21,7 +21,6 @@ public class GyroController : MonoBehaviour
     #region [Unity events]
     protected void Start()
     {
-        AttachGyro();
         Input.gyro.enabled = true;
     }
     protected void Update()

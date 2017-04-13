@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using VRFrameWork;
 using LitJson;
@@ -78,17 +79,14 @@ public class OSBridgeManager : MonoSingleton<OSBridgeManager>
         AndroidJavaClass javaClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
         javaObject = javaClass.GetStatic<AndroidJavaObject>("currentActivity");
 #endif
-
-#if UNITY_EDITOR
-        Test();
-#endif
+        //Test();
     }
 
     private void Test()
     {
         //StartCoroutine(Get(_roomStatusURL + 9, GetRoomStatusHandler));
         roomInfo info = new roomInfo();
-        info.roomID = 195;
+        info.roomID = 217;
         info.userToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQ4LCJpYXQiOjE0OTE5NTkxNDgsImV4cCI6MTQ5MjEzMTk0OH0.8T9sKTGRXFXdwRNs2Cz9ZoCPX7_2tI5jQH0K8-a8Ovs";
         string json = JsonMapper.ToJson(info);
         InitRoom(json);
@@ -174,14 +172,14 @@ public class OSBridgeManager : MonoSingleton<OSBridgeManager>
 		if (_roomStatus == null) {
 			return false;
 		}
-		switch (name) 
+        switch (name) 
 		{
 		case "普通宠物":
 			return _roomStatus.data.pet1_count!=0;
 		case "高级宠物":
 			return _roomStatus.data.pet2_count!=0;
 		case "金宠":
-			return _roomStatus.data.pet2_count!=0;
+			return _roomStatus.data.pet3_count!=0;
 		default:
 			Debug.LogError ("petName Error!");
 			return false;
@@ -190,11 +188,9 @@ public class OSBridgeManager : MonoSingleton<OSBridgeManager>
 
     public void JudgeCapturePetOnServer(string petName)
     {
-        Debug.Log(petName);
         if (!string.IsNullOrEmpty(petName))
         {
             string url = _caughtPetURL + _roomID + "&petName=" + WWW.EscapeURL(petName) + "&token=" + _userToken;
-            Debug.Log(url);
             StartCoroutine(Get(url, JudgeCapturePetHandler));
         }
         else
@@ -205,16 +201,13 @@ public class OSBridgeManager : MonoSingleton<OSBridgeManager>
 
     private void JudgeCapturePetHandler(string json)
     {
-        Debug.Log(json);
         JsonData data = JsonMapper.ToObject(json);
         if((int)data["code"] == 0)
         {
-            Debug.Log("成功！");
             EventDispatcher.TriggerEvent("ShowRoomStatus");
         }
         else
         {
-            Debug.Log("失败");
             EventDispatcher.TriggerEvent("RefreshRoomStatus",true);
         }
     }
@@ -227,13 +220,10 @@ public class OSBridgeManager : MonoSingleton<OSBridgeManager>
         if ((int)data["code"] == 0)
         {
             _roomStatus = JsonMapper.ToObject<RoomStatus>(json);
+            EventDispatcher.TriggerEvent("RefreshRoomStatus", false);
             if (_roomStatus.data.status == "end")
             {
                 StartCoroutine(Get(_historyURL + _roomID, GetHistoryInfoHandler));
-            }
-            else
-            {
-                EventDispatcher.TriggerEvent("RefreshRoomStatus",false);
             }
         }
         else

@@ -404,6 +404,20 @@ public class UIPanel : MonoBehaviour
             }
         }
 
+        if(userNames.Length<=4)
+        {
+            RectTransform rectTrans = _layoutGroupTran.GetComponent<RectTransform>();
+            rectTrans.sizeDelta = new Vector2(rectTrans.rect.width, 420);
+            rectTrans.localPosition = new Vector3(0, -210, 0);
+        }
+        else if(userNames.Length >4)
+        {
+            int count = (userNames.Length % 2 == 0 ? userNames.Length / 2 : userNames.Length / 2 + 1);
+            RectTransform rectTrans = _layoutGroupTran.GetComponent<RectTransform>();
+            rectTrans.sizeDelta = new Vector2(rectTrans.rect.width, 167*count);
+            rectTrans.localPosition = new Vector3(0, -167 * count, 0);
+        }
+
         for (int i = 0; i < userNames.Length; ++i)
         {
             if (i < _layoutGroupTran.childCount)
